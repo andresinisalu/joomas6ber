@@ -60,5 +60,5 @@ typings/
 # next.js build output
 .next
 
-# Intellij
-.idea
+# Intellij configuration folder
+.idea/
