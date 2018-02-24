@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Joomasõber</title>
+  <link href="../stylesheets/bootstrap.css" rel="stylesheet">
+  <link href="../stylesheets/style.css" rel="stylesheet">
+  <script src="../scripts/jquery-3.3.1.js"></script>
+  <script src="../scripts/bootstrap.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <script src='../scripts/index.js'></script>
+</head>
+<body>
+<div class='wrapper'>
+  <nav id="sidebar" class='active'>
+    <div class="sidebar-header">
+      <h3>Collapsible Sidebar</h3>
+    </div>
+
+    <ul class="list-unstyled components">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">About</a></li>
+
+      <li><
+        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
+        <ul class="collapse list-unstyled" id="homeSubmenu">
+          <li><a href="#">Page</a></li>
+          <li><a href="#">Page</a></li>
+          <li><a href="#">Page</a></li>
+        </ul>
+
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div id='content'>
+    <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
+      <i class="glyphicon glyphicon-align-left"></i>
+      Toggle Sidebar
+    </button>
+  </div>
+  <div class='container col-sm-6'>
+    <div id='pealkiri' class='text-center'>
+      Joogisõbrad
+    </div>
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0 text-center">
+            <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                    aria-controls="collapseOne">
+              Lisa Jook
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
