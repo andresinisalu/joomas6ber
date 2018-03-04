@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 const app = require('../app')
-const debug = require('debug')('Joogis6ber:debug')
+const debug = require('debug')('Joomas6ber:debug')
 const http = require('http')
 
 /**
