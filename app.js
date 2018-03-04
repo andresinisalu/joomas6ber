@@ -4,12 +4,16 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var env = require('dotenv').config();
+const { Client } = require('pg');
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 
-var app = express();
+var app = express()
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,5 +48,22 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+// await client.connect()
+async function f () {
+  const client = new Client({
+    user: 'postgres',
+    password: 'isherenow',
+    database: 'postgres'
+  })
+
+  await client.connect()
+
+  const res = await client.query('SELECT * from kasutaja')
+  console.log(res.rows) // Hello world!
+  await client.end()
+}
+
+f()
 
 module.exports = app;

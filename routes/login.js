@@ -10,7 +10,10 @@ router.get('/', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
   res.redirect('/')
+  console.log(req.body.username)
 })
+
+
 
 
 module.exports = router
