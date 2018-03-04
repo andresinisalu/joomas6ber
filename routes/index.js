@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 module.exports = router;
 
-router.get('/annaUseres',function (req, res, next) {
+router.get('/testDB',function (req, res, next) {
   db.query("SELECT * FROM kasutaja", [], function (error, result) {
     console.log(result, error);
     res.render("index", {title: result.rows[0].name})

@@ -52,9 +52,9 @@ app.use(function (err, req, res, next) {
 // await client.connect()
 async function f () {
   const client = new Client({
-    user: 'postgres',
-    password: 'isherenow',
-    database: 'postgres'
+    user: process.env.DBUSER,
+    password: process.env.DBPW,
+    database: process.env.DB
   })
 
   await client.connect()

@@ -1,39 +1,26 @@
 const { Client } = require('pg')
-// await client.connect()
-
-// await client.end()
-
+require('dotenv')
 const { Pool } = require('pg')
 
 const pool = new Pool({
-  user: 'postgres',
+  user: process.env.DBUSER,
   host: 'localhost',
-  database: 'postgres',
-  password: 'isherenow',
+  database: process.env.DB,
+  password: process.env.DBPW,
   port: 5432,
 })
-
-// pool.query('SELECT NOW()', (err, res) => {
-//   console.log(err, res)
-// })
 
 const client = new Client({
-  user: 'postgres',
+  user: process.env.DBUSER,
   host: 'localhost',
-  database: 'postgres',
-  password: 'isherenow',
+  database: process.env.DB,
+  password: process.env.DBPW,
   port: 5432,
 })
 
-function findUser(user){
-
-}
+// function findUser(user){}
 
 client.connect()
-
-// client.query('SELECT NOW()', (err, res) => {
-//   console.log(err, res)
-// })
 
 module.exports = {
   query: (text, params, callback) => {
