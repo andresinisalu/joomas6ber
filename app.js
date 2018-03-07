@@ -60,7 +60,7 @@ async function f () {
   await client.connect()
 
   const res = await client.query('SELECT * from kasutaja')
-  console.log(res.rows) // Hello world!
+  console.log(res.rows)
   await client.end()
 }
 

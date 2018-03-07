@@ -1,19 +1,26 @@
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <!DOCTYPE html>
-<html lang="en">
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
-  <title>Joomasõber</title>
+  <title>Joogisõber</title>
   <link href="../stylesheets/bootstrap.css" rel="stylesheet">
   <link href="../stylesheets/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="../scripts/jquery-3.3.1.js"></script>
   <script src="../scripts/bootstrap.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script src='../scripts/index.js'></script>
 </head>
 <body>
+<div id='pealkiri' class='jumbotron'>
+  <h1>Joogisõber</h1>
+</div>
+
 <div class='wrapper'>
-  <nav id="sidebar" class='active'>
+
+  <!--<nav id="sidebar" class='lg-active'>-->
+  <nav id="sidebar" class='lg-active hidden-xs'>
     <div class="sidebar-header">
       <h3>Collapsible Sidebar</h3>
     </div>
@@ -22,7 +29,7 @@
       <li class="active"><a href="#">Home</a></li>
       <li><a href="#">About</a></li>
 
-      <li><
+      <li>
         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
         <ul class="collapse list-unstyled" id="homeSubmenu">
           <li><a href="#">Page</a></li>
@@ -38,20 +45,23 @@
   <div id='content'>
     <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
       <i class="glyphicon glyphicon-align-left"></i>
-      Toggle Sidebar
+      <i class="fas fa-bars hamburger"></i>
     </button>
   </div>
-  <div class='container col-sm-6'>
-    <div id='pealkiri' class='text-center'>
-      Joogisõbrad
-    </div>
+  <div class='container'>
+
     <div id="accordion">
       <div class="card">
         <div class="card-header" id="headingOne">
           <h5 class="mb-0 text-center">
             <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                     aria-controls="collapseOne">
-              Lisa Jook
+              <!--Lisa Jook-->
+              <span class="icon-stack"
+                    <i></i>
+              <i class="fas fa-beer icon-stack-3x"></i>
+              <i class="fas fa-plus icon-stack-1x"></i>
+              </span>
             </button>
           </h5>
         </div>
@@ -60,15 +70,20 @@
           <div class="card-body">
             <form>
               <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                <label for="drinkSelector">Drink selection</label>
+                <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="IPA" />
+                <datalist id='drinkSelection'>
+                  <option value="IPA">IPA</option>
+                  <option value="American pale ale">American pale ale</option>
+                  <option value="Saku originaal">Saku originaal</option>
+                  <option value="Alecoq premium">Alecoq premium</option>
+                </datalist>
               </div>
               <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="volumeInput">Volume</label>
+                <input type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)">
               </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Add Drink</button>
             </form>
           </div>
         </div>
