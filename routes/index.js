@@ -2,6 +2,25 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const db = require('../db')
+const passport = require('passport')
+
+/* GET users listing. */
+router.get('/login', function (req, res, next) {
+  res.sendFile(path.resolve('public/views/login.html'))
+})
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/users',
+  failureRedirect: '/login'
+}))
+
+router.get('/logout', (req, res, next) => {
+  req.session.destroy((err) => {
+    if (err) return next(err)
+    req.logout()
+    res.sendStatus(200)
+  })
+})
 
 /* GET home page. */
 router.get('/', function (req, res, next) {

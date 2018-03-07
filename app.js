@@ -6,13 +6,15 @@ const bodyParser = require('body-parser')
 const env = require('dotenv').config()
 const winston = require('winston')
 const logger = require('./utils/logger')
-var db = require('./db')
+const passport = require('passport')
+const session = require('express-session')
+const pgSession = require('connect-pg-simple')(session)
+const app = express()
+const db = require('./db')
+require('./config/passport')(passport, db)
 
 let index = require('./routes/index')
 let users = require('./routes/users')
-let login = require('./routes/login')
-
-const app = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -25,10 +27,22 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(session({
+  store: new pgSession({
+    pool: db.pool,
+    tableName: 'session'
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 } // 30 days
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/', index)
 app.use('/users', users)
-app.use('/login', login)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
