@@ -23,34 +23,41 @@ pool.connect((err) => {
   else logger.log('info', 'Connected to the database.')
 })
 
-function getUserByUsername (user, cb) {
-  pool.query('SELECT * from users where username=$1', [user.username], function (err, result) {
-    if (err) {
-      logger.log('error', 'Error while retrieving an user=%s from db: %s', user.username, err)
-    } else {
-      logger.log('info', 'Found an user=%s.', user.username)
-    }
-    cb(err, result)
-  })
+function getUserByUsername (username, cb) {
+  pool.query('SELECT * from users where username=$1', [username], (err, result) => cb(err, result))
 }
 
 function addUser (user, cb) {
   pool.query('INSERT INTO public.users ' +
-    '(firstname, lastname, username, password) VALUES ' +
-    '($1, $2, $3, $4);', [user.firstname, user.lastname, user.username, user.password],
+    '(username, password, firstname, middlename, lastname, service, gender, weight, type, facebook_id) VALUES ' +
+    '($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)' +
+    'RETURNING id;',
+    [user.username, user.password, user.firstName, user.middleName, user.lastName, user.service, user.gender, user.weight, user.type, user.facebook_id],
     (err, res) => {
       cb(err, res)
     })
 }
-
 function init () {
   return readFile(pathModule.resolve(__dirname, './init.sql'), 'utf8')
     .then(tableDef => pool.query(tableDef))
+}
+
+function getUserByFacebookId (fbid, cb) {
+  pool.query('SELECT * FROM users WHERE facebook_id=$1', [fbid], (err, res) => {
+    cb(err, res)
+  })
+}
+
+function getUserById (uid, cb) {
+  pool.query('SELECT * FROM public.users WHERE id = $1', [uid], (err, res) => cb(err, res))
 }
 
 module.exports = {
   query: (text, params, callback) => pool.query(text, params, callback),
   init,
   addUser,
-  pool
+  pool,
+  getUserByFacebookId,
+  getUserById,
+  getUserByUsername
 }

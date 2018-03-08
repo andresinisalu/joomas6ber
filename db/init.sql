@@ -1,12 +1,17 @@
 drop owned by current_user;
 
 CREATE TABLE public.users
-("firstname" text NOT NULL,
-"lastname" text NOT NULL,
+("firstname" text,
+"middlename" text,
+"lastname" text,
+"service" text,
+"gender" text,
+"weight" decimal,
 "id" serial NOT NULL,
-"username" text NOT NULL UNIQUE,
-"password" text NOT NULL,
-"type" text NOT NULL,
+"username" text UNIQUE,
+"password" text,
+"type" text,
+"facebook_id" text,
 CONSTRAINT "id" PRIMARY KEY ("id")
 );
 ALTER TABLE public.users OWNER to joomas6ber;

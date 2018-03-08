@@ -22,6 +22,12 @@ router.get('/logout', (req, res, next) => {
   })
 })
 
+router.get('/login/facebook', passport.authenticate('facebook'))
+
+router.get('/login/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  (req, res) => res.redirect('/users'))
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.sendFile(path.resolve('public/views/index.html'))
