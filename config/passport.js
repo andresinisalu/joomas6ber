@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const logger = require('../utils/logger')
 const FacebookStrategy = require('passport-facebook').Strategy
 const LocalStrategy = require('passport-local').Strategy
+const ClientCertStrategy = require('passport-client-cert').Strategy
 
 module.exports = (passport, db) => {
 
@@ -59,6 +60,35 @@ module.exports = (passport, db) => {
         }
       })
     }))
+
+  passport.use(new ClientCertStrategy((cert, cb) => {
+    let subject = cert.subject
+    if (subject) {
+      db.getUserBySsn(subject.serialNumber, (err, res) => {
+        if (err) return cb(err)
+        if (res.rowCount === 0) {
+          // Create new user and add to db.
+          firstName = subject.GN.split(' ').map(w => w[0].toUpperCase() + w.substring(1).toLowerCase()).join(' ')
+          lastName = subject.SN.split(' ').map(w => w[0].toUpperCase() + w.substring(1).toLowerCase()).join(' ')
+          user = {
+            ssn: subject.serialNumber,
+            service: 'cert',
+            firstName: firstName,
+            lastName: lastName,
+            type: 'user'
+          }
+          db.addUser(user, (err, res) => {
+            if (err) logger.error('Error adding new cert user to DB!', err.message, err.stack)
+            else Object.assign(user, { id: res.rows[0]['id'] }) // Add 'id' field from db to obj.
+            return cb(err, user)
+          })
+        } else {
+          // Found an existing user.
+          return cb(err, user)
+        }
+      })
+    }
+  }))
 
   passport.serializeUser((user, done) => {
     done(null, user) //Todo: mõelda välja, mis asi jätta. user.id on variant.

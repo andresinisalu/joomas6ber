@@ -12,6 +12,7 @@ CREATE TABLE public.users
 "password" text,
 "type" text,
 "facebook_id" text,
+"ssn" text,
 CONSTRAINT "id" PRIMARY KEY ("id")
 );
 ALTER TABLE public.users OWNER to joomas6ber;

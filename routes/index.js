@@ -42,4 +42,19 @@ router.get('/testDB', function (req, res, next) {
   })
 })
 
+router.get('/login/client-cert', passport.authenticate('client-cert', {
+  session: true,
+  successRedirect: '/users',
+  failureRedirect: '/login'
+}))
+
+/* Redirects HTTP to HTTPS for ID-card authentication */
+router.get('/login/secure', (req, res, next) => {
+  if (!req.client.encrypted) {
+    res.redirect('https://' + req.headers.host.split(':')[0] + '/login/client-cert')
+  } else {
+    res.redirect('/login/client-cert')
+  }
+})
+
 module.exports = router

@@ -29,10 +29,10 @@ function getUserByUsername (username, cb) {
 
 function addUser (user, cb) {
   pool.query('INSERT INTO public.users ' +
-    '(username, password, firstname, middlename, lastname, service, gender, weight, type, facebook_id) VALUES ' +
-    '($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)' +
+    '(username, password, firstname, middlename, lastname, service, gender, weight, type, facebook_id, ssn) VALUES ' +
+    '($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)' +
     'RETURNING id;',
-    [user.username, user.password, user.firstName, user.middleName, user.lastName, user.service, user.gender, user.weight, user.type, user.facebook_id],
+    [user.username, user.password, user.firstName, user.middleName, user.lastName, user.service, user.gender, user.weight, user.type, user.facebook_id, user.ssn],
     (err, res) => {
       cb(err, res)
     })
@@ -48,6 +48,10 @@ function getUserByFacebookId (fbid, cb) {
   })
 }
 
+function getUserBySsn (ssn, cb) {
+  pool.query('SELECT * FROM users WHERE ssn=$1', [ssn], (err, res) => cb(err, res))
+}
+
 function getUserById (uid, cb) {
   pool.query('SELECT * FROM public.users WHERE id = $1', [uid], (err, res) => cb(err, res))
 }
@@ -59,5 +63,6 @@ module.exports = {
   pool,
   getUserByFacebookId,
   getUserById,
-  getUserByUsername
+  getUserByUsername,
+  getUserBySsn: getUserBySsn
 }
