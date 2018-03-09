@@ -67,12 +67,12 @@ db.init()
 const https = require('https')
 const fs = require('fs')
 const options = {
-  key: fs.readFileSync('server-debug-key.pem'),
-  cert: fs.readFileSync('server-debug-cert.pem'),
+  key: fs.readFileSync('./config/certificates/server-debug-key.pem'),
+  cert: fs.readFileSync('./config/certificates/server-debug-cert.pem'),
   ca: [
-    fs.readFileSync('ESTEID-SK_2015.pem.crt'),
-    fs.readFileSync('EE_Certification_Centre_Root_CA.pem.crt'),
-    fs.readFileSync('EID-SK_2016.pem.crt')
+    fs.readFileSync('./config/certificates/ESTEID-SK_2015.pem.crt'),
+    fs.readFileSync('./config/certificates/EE_Certification_Centre_Root_CA.pem.crt'),
+    fs.readFileSync('./config/certificates/EID-SK_2016.pem.crt')
   ],
   requestCert: true,
   rejectUnauthorized: true
