@@ -16,8 +16,7 @@ module.exports = (passport, db) => {
         const first = result.rows[0]
         bcrypt.compare(password, first.password, function (err, res) {
           if (res) {
-            //cb(null, { id: first.id, username: first.username, type: first.type })
-            cb(null, first) //Todo: mõelda välja, mis field'e vaja üldse.
+            cb(null, first)
           } else {
             cb(null, false)
           }
@@ -68,8 +67,8 @@ module.exports = (passport, db) => {
         if (err) return cb(err)
         if (res.rowCount === 0) {
           // Create new user and add to db.
-          firstName = subject.GN.split(' ').map(w => w[0].toUpperCase() + w.substring(1).toLowerCase()).join(' ')
-          lastName = subject.SN.split(' ').map(w => w[0].toUpperCase() + w.substring(1).toLowerCase()).join(' ')
+          let firstName = subject.GN.split(' ').map(w => w[0].toUpperCase() + w.substring(1).toLowerCase()).join(' ')
+          let lastName = subject.SN.split(' ').map(w => w[0].toUpperCase() + w.substring(1).toLowerCase()).join(' ')
           user = {
             ssn: subject.serialNumber,
             service: 'cert',
@@ -91,13 +90,13 @@ module.exports = (passport, db) => {
   }))
 
   passport.serializeUser((user, done) => {
-    done(null, user) //Todo: mõelda välja, mis asi jätta. user.id on variant.
+    done(null, user)
   })
 
   passport.deserializeUser((user, cb) => {
     db.getUserById(parseInt(user.id, 10), (err, results) => {
       if (err) {
-        logger.error('Error when selecting user on session deserialize', err)
+        logger.error('Error when selecting user on session deserialize.', err.message, err.stack)
         return cb(err)
       }
       cb(null, results.rows[0])
