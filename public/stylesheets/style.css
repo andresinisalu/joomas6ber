@@ -148,21 +148,21 @@ ul ul a {
   font-size: 1.5em;
 }
 .icon-stack-3x {
-  font-size: 2em;
   color: #25A2B7;
   font-size: 3em;
 }
 
 .btn {
   background-color: #25A2B7;
+  border-radius: 5%;
 }
 
 .jumbotron {
   text-align: center;
   margin: auto;
-  background-image: url("https://images.unsplash.com/photo-1462887749044-b47cb05b83b8?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cf5aef27b01bf436bac0d5b5521e3ae2&auto=format&fit=crop&w=2550&q=80");
+  background-image: url("https://images.unsplash.com/photo-1438557068880-c5f474830377?ixlib=rb-0.3.5&s=ffb969051eb7d6e927743824fa62d396&auto=format&fit=crop&w=2106&q=80");
   background-repeat:no-repeat;
   background-size: cover;
-  background-position: 0% 22%;;
-  height: 1.8em;
+  background-position: 0% 25%;;
+  height: 2.5em;
 }
