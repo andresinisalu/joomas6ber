@@ -32,3 +32,16 @@ CREATE TABLE "session" (
 )
 WITH (OIDS=FALSE);
 ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE TABLE "stats" (
+"screen_width" integer,
+"screen_height" integer,
+"date" text,
+"ip_addr" text,
+"country_name" text,
+"city" text,
+"user_agent" text,
+"os_name" text,
+"browser_name" text,
+"endpoint" text
+);

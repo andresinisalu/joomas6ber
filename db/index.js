@@ -56,6 +56,19 @@ function getUserById (uid, cb) {
   pool.query('SELECT * FROM public.users WHERE id = $1', [uid], (err, res) => cb(err, res))
 }
 
+function addStats (stats, cb) {
+  pool.query('INSERT INTO public.stats ' +
+    '(screen_width, screen_height, date, ip_addr, country_name, city, user_agent, os_name, browser_name, endpoint) VALUES ' +
+    '($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);',
+    [stats.screenWidth, stats.screenHeight, stats.date, stats.ip_addr, stats.countryName, stats.city, stats.userAgent, stats.OSName, stats.browserName, stats.endPoint],
+    (err, res) => cb(err, res)
+  )
+}
+
+function getAllStats (cb) {
+  pool.query('SELECT * FROM stats', (err, res) => cb(err, res))
+}
+
 module.exports = {
   query: (text, params, callback) => pool.query(text, params, callback),
   init,
@@ -64,5 +77,7 @@ module.exports = {
   getUserByFacebookId,
   getUserById,
   getUserByUsername,
-  getUserBySsn: getUserBySsn
+  getUserBySsn: getUserBySsn,
+  addStats,
+  getAllStats
 }
