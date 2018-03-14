@@ -82,4 +82,8 @@ router.get('/stats/getAll', requiresAdmin, function (req, res, next) {
   }
 )
 
+router.get('/about', function (req, res, next) {
+  res.sendFile(path.resolve('public/views/about.html'))
+})
+
 module.exports = router
