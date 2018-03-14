@@ -12,25 +12,32 @@
   <h1>JoomaSõber</h1>
   <span id='randomQuote'>JoomaSõber taskus</span>
 </div>
-<div class='container'>
+<div class='container' id='loginContainer'>
   <div class='row'>
     <div class='col-sm-4'>
       Placeholder img
     </div>
     <div class='col-sm-6'>
-      <form method='post'>
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" class="form-control" id="username" placeholder="username" name='username' required>
+      <div class='card'>
+        <div class='card-header'>
+          Login
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="password" name='password' required>
+        <div class='card-body'>
+        <form method='post'>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" placeholder="username" name='username' required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="password" name='password' required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+          <a class="btn btn-primary" href="/login/facebook" role="button">Facebook</a>
+          <a class="btn btn-primary" href="/login/secure" role="button">ID-Card</a>
+        </form>
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-        <a href="/login/facebook">Log In with Facebook</a>
-        <a href="/login/secure">Log in ID-card</a>
-      </form>
+      </div>
     </div>
   </div>
 </div>

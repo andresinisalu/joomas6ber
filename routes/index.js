@@ -23,7 +23,8 @@ router.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
     if (err) return next(err)
     req.logout()
-    res.sendStatus(200)
+    //res.sendStatus(200)
+    res.redirect('/login')
   })
 })
 
