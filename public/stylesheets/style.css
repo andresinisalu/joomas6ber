@@ -12,6 +12,10 @@
   margin-top: 2em;
 }
 
+#loginContainer{
+  padding-top: 50px;
+}
+
 #sidebar {
   min-width: 250px;
   max-width: 250px;
@@ -90,6 +94,10 @@ a, a:hover, a:focus {
   background: #40ACCC;
 }
 
+#about-text{
+  padding-top: 100px;
+}
+
 .hamburger {
   font-size: 1.5em;
 }
@@ -100,12 +108,11 @@ ul ul a {
   background: #25A2B7;
 }
 
-.card {
+#cardDrink {
   border: none;
 }
 
-/*#headingOne {*/
-.card-header {
+#headingOne {
   width: 100px;
   margin: auto;
   background: none;
@@ -157,11 +164,9 @@ ul ul a {
 }
 
 .jumbotron {
-  text-align: center;
   margin: auto;
   background-image: url("https://images.unsplash.com/photo-1438557068880-c5f474830377?ixlib=rb-0.3.5&s=ffb969051eb7d6e927743824fa62d396&auto=format&fit=crop&w=2106&q=80");
-  background-repeat:no-repeat;
   background-size: cover;
-  background-position: 0% 25%;;
-  height: 2.5em;
+  background-position: 0% 25%;
+
 }
