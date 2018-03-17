@@ -5,6 +5,7 @@ const db = require('../db')
 const passport = require('passport')
 const logger = require('../utils/logger')
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
+const requiresLogin = require('../config/middlewares/authorization').requiresLogin
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
@@ -37,7 +38,7 @@ router.get('/login/facebook/callback', passport.authenticate('facebook', { failu
   })
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', requiresLogin, function (req, res, next) {
   res.sendFile(path.resolve('public/views/index.html'))
 })
 
@@ -85,6 +86,58 @@ router.get('/stats/getAll', requiresAdmin, function (req, res, next) {
 
 router.get('/about', function (req, res, next) {
   res.sendFile(path.resolve('public/views/about.html'))
+})
+
+router.get('/settings', function (req, res, next) {
+  res.redirect('/')
+})
+
+router.get('/drinks/getAllAvailable', requiresLogin, function (req, res, next) {
+  db.getAllDrinks((error, result) => {
+    if (error) logger.error('Couldn\'t retrieve drinks from db.')
+    res.json(result.rows)
+  })
+})
+
+router.post('/drinks/add', requiresLogin, function (req, res, next) {
+  let drinkId = parseInt(req.body.drinkId, 10)
+  if (!isNaN(drinkId) && req.user.id) {
+    db.getUserById(req.user.id, function (error1, result1) {
+      if (error1) logger.log('error', error1)
+      else {
+        db.getDrinkById(drinkId, function (error2, result2) {
+          if (error2) logger.log('error', error2)
+          else {
+            db.addDrinkToUser(drinkId, req.user.id, (error3, result3) => {
+              if (error3) logger.log('error', error3)
+              else logger.log('info', 'Added a drink to db!', result3)
+            })
+          }
+        })
+      }
+    })
+  }
+  res.redirect('/')
+})
+
+router.get('/drinks/listAllConsumed', requiresLogin, function (req, res, next) {
+  db.getDrinksByUser(req.user.id, function (error, result) {
+    if (error) {
+      logger.log('error', 'Couldn\'t fetch all consumed drinks: ', error)
+      res.send({})
+    }
+    else res.send(result.rows)
+  })
+})
+
+router.get('/drinks/totalConsumed', requiresLogin, function (req, res, next) {
+  db.getNumberOfDrinksByUser(req.user.id, function (error, result) {
+    if (error) {
+      logger.log('error', 'Couldn\'t fetch number of consumed drinks: ', error)
+      res.send({ total: null })
+    }
+    else res.send({ total: result.rows[0].total })
+  })
 })
 
 module.exports = router

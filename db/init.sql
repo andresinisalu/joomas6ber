@@ -13,7 +13,7 @@ CREATE TABLE public.users
 "type" text,
 "facebook_id" text,
 "ssn" text,
-CONSTRAINT "id" PRIMARY KEY ("id")
+CONSTRAINT "user_id" PRIMARY KEY ("id")
 );
 ALTER TABLE public.users OWNER to joomas6ber;
 
@@ -45,3 +45,23 @@ CREATE TABLE "stats" (
 "browser_name" text,
 "endpoint" text
 );
+
+CREATE TABLE "drinks" (
+"name" text,
+"volume" integer,
+"alcohol_content" decimal,
+"price" decimal,
+"id" serial NOT NULL,
+CONSTRAINT "drink_id" PRIMARY KEY ("id")
+);
+
+INSERT INTO drinks
+(name, volume, alcohol_content, price) values
+('Õlu', 500, 5.0, 3.5),
+('Vein', 170, 12.5, 4.0),
+('Viski', 150, 45, 5.0);
+
+CREATE TABLE "usersanddrinks" (
+"userid" integer NOT NULL,
+"drinkid" integer NOT NULL
+)

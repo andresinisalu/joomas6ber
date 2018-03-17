@@ -69,6 +69,35 @@ function getAllStats (cb) {
   pool.query('SELECT * FROM stats', (err, res) => cb(err, res))
 }
 
+function getAllDrinks (cb) {
+  pool.query('SELECT * FROM drinks', (err, res) => cb(err, res))
+}
+
+function getDrinkById (drinkId, cb) {
+  pool.query('SELECT * FROM drinks WHERE id = $1', [drinkId], (err, res) => cb(err, res))
+}
+
+function addDrinkToUser (drinkId, userId, cb) {
+  pool.query('INSERT INTO usersanddrinks' +
+    '(userid, drinkid) VALUES ' +
+    '($1, $2);',
+    [userId, drinkId], (err, res) => cb(err, res))
+}
+
+function getDrinksByUser (userId, cb) {
+  pool.query('SELECT drinks.name, drinks.volume, drinks.price FROM drinks ' +
+    'JOIN usersanddrinks on usersanddrinks.drinkid = drinks.id ' +
+    'JOIN users ON usersanddrinks.userid = users.id ' +
+    'WHERE users.id = $1', [userId], (err, res) => cb(err, res))
+}
+
+function getNumberOfDrinksByUser (userId, cb) {
+  pool.query('SELECT COUNT(*) AS total FROM drinks ' +
+    'JOIN usersanddrinks ON usersanddrinks.drinkid = drinks.id ' +
+    'JOIN users ON usersanddrinks.userid = users.id ' +
+    'WHERE users.id = $1', [userId], (err, res) => cb(err, res))
+}
+
 module.exports = {
   query: (text, params, callback) => pool.query(text, params, callback),
   init,
@@ -79,5 +108,10 @@ module.exports = {
   getUserByUsername,
   getUserBySsn: getUserBySsn,
   addStats,
-  getAllStats
+  getAllStats,
+  getAllDrinks,
+  getDrinkById,
+  addDrinkToUser,
+  getDrinksByUser,
+  getNumberOfDrinksByUser
 }

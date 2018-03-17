@@ -56,8 +56,8 @@ function processData (ip_data) {
   if (navigator.appVersion.indexOf('Linux') !== -1) OSName = 'Linux'
 
   let stats = {
-    screenWidth: window.screen.width * window.devicePixelRatio,
-    screenHeight: window.screen.height * window.devicePixelRatio,
+    screenWidth: parseInt(window.screen.width * window.devicePixelRatio, 10),
+    screenHeight: parseInt(window.screen.height * window.devicePixelRatio, 10),
     date: new Date().toISOString(),
     ip_addr: ip_data != null ? ip_data.ip : null,
     countryName: ip_data != null ? ip_data.country_name : null,
