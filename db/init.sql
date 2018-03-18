@@ -1,5 +1,7 @@
 drop owned by current_user;
 
+CREATE SCHEMA public;
+
 CREATE TABLE public.users
 ("firstname" text,
 "middlename" text,
