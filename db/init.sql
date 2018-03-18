@@ -1,5 +1,7 @@
 drop owned by current_user;
 
+DROP SCHEMA IF EXISTS public;
+
 CREATE SCHEMA public;
 
 CREATE TABLE public.users
