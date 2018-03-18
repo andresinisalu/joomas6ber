@@ -1,4 +1,4 @@
-#pealkiri{
+#pealkiri {
   font-size: 5em;
   color: #fff;
 }
@@ -160,13 +160,24 @@ ul ul a {
 
 .btn {
   background-color: #25A2B7;
-  border-radius: 5%;
+  border-radius: 0;
 }
 
 .jumbotron {
   margin: auto;
   background-image: url("https://images.unsplash.com/photo-1438557068880-c5f474830377?ixlib=rb-0.3.5&s=ffb969051eb7d6e927743824fa62d396&auto=format&fit=crop&w=2106&q=80");
   background-size: cover;
-  background-position: 0% 25%;
+  padding: 0 25%;
+  border-radius: 0;
+  color: white;
 
+}
+
+.canvasTest {
+  min-width: 450px !important;
+  width: 45% !important;
+  height: 45% !important;
+  margin-left: 0;
+  margin-bottom: 3em;
+  float: left;
 }

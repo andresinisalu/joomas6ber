@@ -56,41 +56,84 @@ function createBarChart (stats, attr_name, title) {
       highlightStroke: 'rgba(220,220,220,1)',
       //backgroundColor: ['red', 'blue', 'green', 'blue', 'red', 'blue'],
       backgroundColor: Array.from(new Array(Array.from(counter.keys()).length), x => getRandomColor()),
-      borderWidth: 1,
+      borderWidth: 2,
       data: Array.from(counter.values())
     }]
   }
 
   let ctx = canvas.getContext('2d')
-  window.myBar = new Chart(ctx, {
-    type: 'bar',
-    data: barChartData,
-    options: {
-      responsive: true,
-      legend: {
-        position: 'top',
-        display: false
-      },
-      title: {
-        display: true,
-        text: title
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      },
-      tooltips: {
-        callbacks: {
-          label: function (tooltipItem) {
-            return tooltipItem.yLabel
+  Chart.defaults.global.defaultFontSize = 25;
+  if (attr_name === 'ip_addr') {
+    window.myBar = new Chart(ctx, {
+      type: 'bar',
+      data: barChartData,
+      options: {
+        responsive: true,
+        legend: {
+          position: 'top',
+          display: false
+        },
+        title: {
+          fontSize: 35,
+          display: true,
+          text: title
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }],
+          xAxes: [{
+            ticks: {
+              callback: function () {
+                return null;
+              }
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem) {
+              return tooltipItem.yLabel
+            }
           }
         }
       }
-    }
-  })
+    })
+  } else {
+    window.myBar = new Chart(ctx, {
+      type: 'bar',
+      data: barChartData,
+      options: {
+        responsive: true,
+        legend: {
+          position: 'top',
+          display: false
+        },
+        title: {
+          fontSize: 35,
+          display: true,
+          text: title
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem) {
+              return tooltipItem.yLabel
+            }
+          }
+        }
+      }
+    })
+  }
+  canvas.classList.add('canvasTest')
   document.getElementById('stats_charts').appendChild(canvas)
 }
 
@@ -101,12 +144,13 @@ function drawTable (stats) {
   table.addColumn('string', 'IP address')
   table.addColumn('string', 'Endpoint')
   table.addColumn('string', 'OS Name')
-  table.addColumn('number', 'Sreen width')
-  table.addColumn('number', 'Sreen height')
+  table.addColumn('number', 'Screen width')
+  table.addColumn('number', 'Screen height')
   table.addColumn('string', 'Country')
   table.addColumn('string', 'City')
   table.addColumn('string', 'Browser Name')
   table.addColumn('string', 'User agent')
+
 
   stats.forEach(stat => table.addRow(
     [
@@ -123,15 +167,15 @@ function drawTable (stats) {
     ]
   ))
   let tableDiv = new google.visualization.Table(document.getElementById('stats_table'))
-  tableDiv.draw(table, { showRowNumber: true, width: '100%', height: '50%' })
+  tableDiv.draw(table, { showRowNumber: true, width: '100%', height: '50%', allowHtml: true })
 
-  createBarChart(stats, 'ip_addr', 'IP-s')
   createBarChart(stats, 'endpoint', 'Endpoints')
   createBarChart(stats, 'os_name', 'OS')
   createBarChart(stats, 'country_name', 'Countries')
   createBarChart(stats, 'city', 'Cities')
   createBarChart(stats, 'browser_name', 'Browsers')
   createBarChart(stats, 'resolution', 'Resolutions')
+  createBarChart(stats, 'ip_addr', 'IP-s')
 }
 
 google.charts.setOnLoadCallback(retrieveStats)
