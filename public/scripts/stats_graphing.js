@@ -44,7 +44,7 @@ function createBarChart (stats, attr_name, title) {
 
   let counter = null
   if (attr_name === 'resolution') counter = new Counter(stats.map(x => x.screen_width + 'x' + x.screen_height))
-  else counter = new Counter(stats, x => x[attr_name])
+else counter = new Counter(stats, x => x[attr_name])
 
   let barChartData = {
     labels: Array.from(counter.keys()),
@@ -56,10 +56,10 @@ function createBarChart (stats, attr_name, title) {
       highlightStroke: 'rgba(220,220,220,1)',
       //backgroundColor: ['red', 'blue', 'green', 'blue', 'red', 'blue'],
       backgroundColor: Array.from(new Array(Array.from(counter.keys()).length), x => getRandomColor()),
-      borderWidth: 2,
-      data: Array.from(counter.values())
-    }]
-  }
+  borderWidth: 2,
+    data: Array.from(counter.values())
+}]
+}
 
   let ctx = canvas.getContext('2d')
   Chart.defaults.global.defaultFontSize = 25;
