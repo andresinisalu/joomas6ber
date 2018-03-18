@@ -110,7 +110,7 @@ router.post('/drinks/add', requiresLogin, function (req, res, next) {
           else {
             db.addDrinkToUser(drinkId, req.user.id, (error3, result3) => {
               if (error3) logger.log('error', error3)
-              else logger.log('info', 'Added a drink to db!', result3)
+              else logger.log('info', 'Added a drink to db!')
             })
           }
         })
