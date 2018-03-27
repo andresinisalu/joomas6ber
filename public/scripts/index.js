@@ -1,3 +1,4 @@
+
 let drinks = null
 
 $(document).ready(function () {
@@ -17,6 +18,15 @@ $(document).ready(function () {
   $.get('/drinks/listAllConsumed', function (data) {
     console.log('Consumed drinks: ')
     data.forEach(x => console.log(x.name + ' (' + x.volume + ' ml) ' + x.price + '€'))
+  })
+
+  $.get('/drinks/listAllConsumed', function (data) {
+    $(function () {
+      console.log(data)
+      $('#joodudJoogid').bootstrapTable({
+        data: data
+      });
+    });
   })
 })
 

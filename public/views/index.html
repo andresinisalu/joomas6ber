@@ -6,12 +6,14 @@
   <title>Joogisõber</title>
   <link href="../stylesheets/bootstrap.css" rel="stylesheet">
   <link href="../stylesheets/style.css" rel="stylesheet">
+  <link href='../stylesheets/bootstrap-table.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
   <script> if (!window.jQuery) {document.write('<script src="../scripts/jquery-3.3.1.js" rel="stylesheet"><\/script>')}</script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script> if(typeof($.fn.modal) === 'undefined') {document.write('<script src="../scripts/bootstrap.min.js"><\/script>')}</script>
+  <script src="../scripts/bootstrap-table.js"></script>
   <script src='../scripts/index.js'></script>
 </head>
 <body>
@@ -42,47 +44,65 @@
     </button>
   </div>
   <div class='container'>
-
-    <div id="accordion">
-      <div class="card" id='cardDrink'>
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0 text-center">
-            <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                    aria-controls="collapseOne">
-              <!--Lisa Jook-->
-              <span class="icon-stack">
+    <div class='row'>
+      <div id="accordion" class='col-sm-6'>
+        <div class="card" id='cardDrink'>
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0 text-center">
+              <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                      aria-controls="collapseOne">
+                <!--Lisa Jook-->
+                <span class="icon-stack">
                     <i></i>
               <i class="fas fa-beer icon-stack-3x"></i>
               <i class="fas fa-plus icon-stack-1x"></i>
               </span>
-            </button>
-          </h5>
-        </div>
+              </button>
+            </h5>
+          </div>
 
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-            <form method='post' action='/drinks/add' id='addDrinkForm'>
-              <div class="form-group">
-                <label for="drinkSelector">Drink selection</label>
-                <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook"
-                       name='drink' onchange='selectDrink(this)' />
-                <datalist id='drinkSelection'>
-                </datalist>
-              </div>
-              <div class="form-group">
-                <label for="volumeInput">Volume</label>
-                <input type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)" name='volume'>
-              </div>
-              <div class="form-group">
-                <label for="priceInput">Price</label>
-                <input type="text" class="form-control" id="priceInput" placeholder="Price (€)" name='price'>
-              </div>
-              <input id='drinkId' type='hidden' name='drinkId' value='null'>
-              <button type="submit" class="btn btn-primary">Add Drink</button>
-            </form>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <form method='post' action='/drinks/add' id='addDrinkForm'>
+                <div class="form-group">
+                  <label for="drinkSelector">Drink selection</label>
+                  <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook"
+                         name='drink' onchange='selectDrink(this)' />
+                  <datalist id='drinkSelection'>
+                  </datalist>
+                </div>
+                <div class="form-group">
+                  <label for="volumeInput">Volume</label>
+                  <input type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)" name='volume'>
+                </div>
+                <div class="form-group">
+                  <label for="priceInput">Price</label>
+                  <input type="text" class="form-control" id="priceInput" placeholder="Price (€)" name='price'>
+                </div>
+                <input id='drinkId' type='hidden' name='drinkId' value='null'>
+                <button type="submit" class="btn btn-primary">Add Drink</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
+      <div class='col-sm-5'>
+        <!--<div class='card'>-->
+          <div class='card-header'>
+            Sinu joogid
+          </div>
+          <table data-toggle="table"
+                 data-url="/drinks/listAllConsumed">
+            <thead>
+            <tr>
+              <th data-field="name">Item name</th>
+              <th data-field="volume">Quantity</th>
+              <th data-field="price">Item Price</th>
+            </tr>
+            </thead>
+          </table>
+        </div>
+      <!--</div>-->
     </div>
   </div>
 </div>
