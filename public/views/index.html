@@ -64,18 +64,34 @@
             <form method='post' action='/drinks/add' id='addDrinkForm'>
               <div class="form-group">
                 <label for="drinkSelector">Drink selection</label>
-                <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook"
+                <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook!"
                        name='drink' onchange='selectDrink(this)' />
                 <datalist id='drinkSelection'>
                 </datalist>
+              </div>
+              <div class="form-group">
+                <label for="nameInput">Name</label>
+                <input type="text" class="form-control" id="nameInput" placeholder="Name" name='name'>
               </div>
               <div class="form-group">
                 <label for="volumeInput">Volume</label>
                 <input type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)" name='volume'>
               </div>
               <div class="form-group">
+                <label for="alcoholPercentageInput">Alcohol content</label>
+                <input type="text" class="form-control" id="alcoholPercentageInput" placeholder="Alcohol percentage (%)" name='alcoholPercentage'>
+              </div>
+              <div class="form-group">
                 <label for="priceInput">Price</label>
                 <input type="text" class="form-control" id="priceInput" placeholder="Price (€)" name='price'>
+              </div>
+              <div class="form-group">
+                <label for="startDateInput">Start time</label>
+                <input type="datetime-local" class="form-control" id="startDateInput" name='startDate'>
+              </div>
+              <div class="form-group">
+                <label for="endDateInput">Start time</label>
+                <input type="datetime-local" class="form-control" id="endDateInput" name='endDate'>
               </div>
               <input id='drinkId' type='hidden' name='drinkId' value='null'>
               <button type="submit" class="btn btn-primary">Add Drink</button>

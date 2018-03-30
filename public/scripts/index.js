@@ -18,6 +18,9 @@ $(document).ready(function () {
     console.log('Consumed drinks: ')
     data.forEach(x => console.log(x.name + ' (' + x.volume + ' ml) ' + x.price + '€'))
   })
+
+  $('#startDateInput').val(new Date().toDateInputValue())
+  $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
 })
 
 function selectDrink (selected_drink) {
@@ -26,5 +29,20 @@ function selectDrink (selected_drink) {
     $('#volumeInput').val(drink.volume)
     $('#priceInput').val(drink.price)
     $('#drinkId').val(drink.id)
+    $('#alcoholPercentageInput').val(drink.alcohol_percentage)
+    $('#startDateInput').val(new Date().toDateInputValue())
+    $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
+    $('#nameInput').val(drink.name)
   }
+}
+
+Date.prototype.toDateInputValue = function () {
+  let local = new Date(this)
+  local.setMinutes(this.getMinutes() - this.getTimezoneOffset())
+  return local.toJSON().slice(0, 16)
+}
+
+Date.prototype.addMinutes = function (min) {
+  this.setTime(this.getTime() + (min * 60 * 1000))
+  return this
 }

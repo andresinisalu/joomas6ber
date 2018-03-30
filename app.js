@@ -74,8 +74,8 @@ const options = {
     fs.readFileSync('./config/certificates/EE_Certification_Centre_Root_CA.pem.crt'),
     fs.readFileSync('./config/certificates/EID-SK_2016.pem.crt')
   ],
-  requestCert: true,
-  rejectUnauthorized: true
+  requestCert: false,
+  rejectUnauthorized: false
 }
 
 https.createServer(options, app).listen(443)

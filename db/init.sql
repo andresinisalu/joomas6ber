@@ -53,19 +53,23 @@ CREATE TABLE "stats" (
 CREATE TABLE "drinks" (
 "name" text,
 "volume" integer,
-"alcohol_content" decimal,
+"alcohol_percentage" decimal,
 "price" decimal,
+"userid" integer,
 "id" serial NOT NULL,
 CONSTRAINT "drink_id" PRIMARY KEY ("id")
 );
 
 INSERT INTO drinks
-(name, volume, alcohol_content, price) values
+(name, volume, alcohol_percentage, price) values
 ('Õlu', 500, 5.0, 3.5),
 ('Vein', 170, 12.5, 4.0),
 ('Viski', 150, 45, 5.0);
 
-CREATE TABLE "usersanddrinks" (
+CREATE TABLE "consumed_drinks" (
 "userid" integer NOT NULL,
-"drinkid" integer NOT NULL
+"drinkid" integer NOT NULL,
+"startdate" text NOT NULL,
+"enddate" text,
+"isfinished" boolean
 )
