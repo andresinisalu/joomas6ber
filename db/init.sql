@@ -56,6 +56,7 @@ CREATE TABLE "drinks" (
 "alcohol_percentage" decimal,
 "price" decimal,
 "userid" integer,
+filename text,
 "id" serial NOT NULL,
 CONSTRAINT "drink_id" PRIMARY KEY ("id")
 );

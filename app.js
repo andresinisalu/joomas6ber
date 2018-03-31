@@ -64,20 +64,9 @@ app.use(function (err, req, res, next) {
 
 db.init()
 
-const https = require('https')
-const fs = require('fs')
-const options = {
-  key: fs.readFileSync('./config/certificates/server-debug-key.pem'),
-  cert: fs.readFileSync('./config/certificates/server-debug-cert.pem'),
-  ca: [
-    fs.readFileSync('./config/certificates/ESTEID-SK_2015.pem.crt'),
-    fs.readFileSync('./config/certificates/EE_Certification_Centre_Root_CA.pem.crt'),
-    fs.readFileSync('./config/certificates/EID-SK_2016.pem.crt')
-  ],
-  requestCert: false,
-  rejectUnauthorized: false
-}
-
-https.createServer(options, app).listen(443)
+/* Will clear uploads folder for testing */
+const del = require('del')
+const uploads_folder = path.join('public', 'images', 'uploads')
+del.sync([uploads_folder + '/**', '!' + uploads_folder], '!' + path.join('public', 'images', 'uploads', '.gitignore'));
 
 module.exports = app

@@ -94,12 +94,12 @@ function getNumberOfDrinksByUser (userId, cb) {
     'WHERE users.id = $1', [userId], cb)
 }
 
-function addDrink (name, volume, alcoholPercentage, price, userId, cb) {
+function addDrink (name, volume, alcoholPercentage, price, userId, filename, cb) {
   pool.query('INSERT INTO drinks' +
-    '(name, volume, alcohol_percentage, price, userid) VALUES ' +
-    '($1, $2, $3, $4, $5)' +
+    '(name, volume, alcohol_percentage, price, userid, filename) VALUES ' +
+    '($1, $2, $3, $4, $5, $6)' +
     'RETURNING id;',
-    [name, volume, alcoholPercentage, price, userId], cb)
+    [name, volume, alcoholPercentage, price, userId, filename], cb)
 }
 
 module.exports = {

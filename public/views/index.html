@@ -61,7 +61,7 @@
 
         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
           <div class="card-body">
-            <form method='post' action='/drinks/add' id='addDrinkForm'>
+            <form method='post' action='/drinks/add' id='addDrinkForm' enctype="multipart/form-data">
               <div class="form-group">
                 <label for="drinkSelector">Drink selection</label>
                 <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook!"
@@ -69,6 +69,7 @@
                 <datalist id='drinkSelection'>
                 </datalist>
               </div>
+              <img id='drinkImage' width='0px' height='0px' />
               <div class="form-group">
                 <label for="nameInput">Name</label>
                 <input type="text" class="form-control" id="nameInput" placeholder="Name" name='name'>
@@ -93,6 +94,7 @@
                 <label for="endDateInput">Start time</label>
                 <input type="datetime-local" class="form-control" id="endDateInput" name='endDate'>
               </div>
+              <input type="file" name="drink-img">
               <input id='drinkId' type='hidden' name='drinkId' value='null'>
               <button type="submit" class="btn btn-primary">Add Drink</button>
             </form>

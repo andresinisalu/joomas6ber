@@ -33,6 +33,20 @@ function selectDrink (selected_drink) {
     $('#startDateInput').val(new Date().toDateInputValue())
     $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
     $('#nameInput').val(drink.name)
+
+    if (drink.filename) {
+      $('#drinkImage').attr({
+        'src': '/images/uploads/' + drink.filename,
+        'width': '100px',
+        'height': '100px'
+      })
+    }
+    else {
+      $('#drinkImage').attr({
+        'height': '0px',
+        'width': '0px'
+      })
+    }
   }
 }
 

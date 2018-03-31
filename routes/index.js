@@ -4,6 +4,7 @@ const path = require('path')
 const db = require('../db')
 const passport = require('passport')
 const logger = require('../utils/logger')
+const uploader = require('../utils/uploader')
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
 
@@ -99,7 +100,7 @@ router.get('/drinks/getAllAvailable', requiresLogin, function (req, res, next) {
   db.getAllAvailableDrinks(req.user.id, (error, result) => {
     if (error) {
       logger.error('Couldn\'t retrieve drinks from db: ', error.message, error.stack)
-      res.sendStatus(500);
+      res.sendStatus(500)
     }
     else {
       res.json(result.rows)
@@ -107,7 +108,7 @@ router.get('/drinks/getAllAvailable', requiresLogin, function (req, res, next) {
   })
 })
 
-router.post('/drinks/add', requiresLogin, function (req, res, next) {
+router.post('/drinks/add', requiresLogin, uploader.single('drink-img'), function (req, res, next) {
   let name = req.body.name
   let startDate = new Date(req.body.startDate).toISOString()
   let endDate = new Date(req.body.endDate).toISOString()
@@ -115,6 +116,8 @@ router.post('/drinks/add', requiresLogin, function (req, res, next) {
   let price = parseFloat(req.body.price)
   let volume = req.body.volume
   let isFinished = true
+  let filename = null
+  if (req.file) filename = req.file.filename
 
   db.getAllAvailableDrinks(req.user.id, (error, result) => {
     if (error) logger.error('Some problem with loading drinks from db.')
@@ -134,7 +137,7 @@ router.post('/drinks/add', requiresLogin, function (req, res, next) {
         }
       }
       if (leitudId === null) {
-        db.addDrink(name, volume, alcoholPercentage, price, req.user.id, (error, result) => {
+        db.addDrink(name, volume, alcoholPercentage, price, req.user.id, filename, (error, result) => {
           if (error) logger.error('Could not add new drink to db.')
           else {
             leitudId = result.rows[0]['id']
