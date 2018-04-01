@@ -1,0 +1,39 @@
+{
+  data : {
+    title: i18n.__(
+    "About us"
+    ),
+    whoarewe: i18n.__(
+    "Who are we"
+    ),
+    whotext: i18n.__(
+    "We are students from University of Tartu - Andre, Erik and Jan. "
+    ),
+    whatwedo: i18n.__(
+    "What do we do"
+    ),
+    whattext: i18n.__(
+    "We created this website to "
+    +
+    "spread knowledge about alcohol consumption (and also to finish our web app development course)."
+    ),
+    menu: i18n.__(
+    "Menu"
+    ),
+    mainpage: i18n.__(
+    "Main Page"
+    ),
+    changelang: i18n.__(
+    "Change to Estonian"
+    ),
+    aboutus: i18n.__(
+    "About us"
+    ),
+    settings: i18n.__(
+    "Settings"
+    ),
+    logout: i18n.__(
+    "Log Out"
+    )
+  }
+}
