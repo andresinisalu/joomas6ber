@@ -2,6 +2,34 @@ doctype html
 html
   head
     title= title
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width", initial-scale=1)
+    link(rel="stylesheet", href="/stylesheets/bootstrap.css")
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src="https://use.fontawesome.com/releases/v5.0.6/js/all.js")
+    script(type="text/javascript",  src="https://code.jquery.com/jquery-3.3.1.js", integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=", crossorigin="anonymous")
+    script(type="text/javascript", src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js")
+    script(src="../scripts/index.js")
   body
-    block content
+    div(id="pealkiri", class="jumbotron")
+      h1 Joogisõber
+    div(class="wrapper")
+      nav(id="sidebar", class="lg-active hidden-xs")
+        div(class="sidebar-header")
+          h3= menu
+        ul(class="list-unstyled components")
+          li
+            a(href="/")= mainpage
+          li
+            a(href="/changeLang")= changelang
+          li
+            a(href="#")= settings
+          li
+            a(href="about")= aboutus
+          li
+            a(href="logout")= logout
+      div(id="content")
+        button(type="button" id="sidebarCollapse", class="btn btn-info navbar-btn")
+          i(class="glyphicon glyphicon-align-left")
+          i(class="fas fa-bars")
+      block content

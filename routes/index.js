@@ -1,4 +1,5 @@
 const express = require('express')
+const app = require('../app')
 const router = express.Router()
 const path = require('path')
 const db = require('../db')
@@ -8,6 +9,10 @@ const uploader = require('../utils/uploader')
 const nodemailer = require('nodemailer');
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
+const i18n = new (require('i18n-2'))({ //TODO: var?
+  locales: ['et', 'en'],
+  updateFiles: false
+});
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
@@ -41,15 +46,21 @@ router.get('/login/facebook/callback', passport.authenticate('facebook', { failu
 
 /* GET home page. */
 router.get('/', requiresLogin, function (req, res, next) {
-  res.sendFile(path.resolve('public/views/index.html'))
-})
-
-router.get('/testDB', function (req, res, next) {
-  db.query('SELECT * FROM users', [], function (error, result) {
-    if (error) res.render('error', { error: error, message: 'Database error!' })
-    else {
-      res.render('index', { title: result.rows[0].firstname })
-    }
+  // res.sendFile(path.resolve('public/views/index.html'))
+  res.render('index', {
+    title: "Joogisõber",
+    menu: i18n.__('Menu'),
+    mainpage: i18n.__('Main Page'),
+    changelang: i18n.__('Change to Estonian'),
+    aboutus: i18n.__('About us'),
+    settings: i18n.__('Settings'),
+    logout: i18n.__('Log Out'),
+    name: i18n.__('Name'),
+    volume: i18n.__("Volume"),
+    alcoholcontent:i18n.__("Alcohol content"),
+    price:i18n.__("Price"),
+    starttime:i18n.__("Start time"),
+    endtime:i18n.__("End time")
   })
 })
 
@@ -89,9 +100,48 @@ router.get('/stats/getAll', requiresAdmin, function (req, res, next) {
   }
 )
 
-router.get('/about', function (req, res, next) {
-  res.sendFile(path.resolve('public/views/about.html'))
+router.get('/changeLang', function (req, res, next) {
+  if (i18n.getLocale() === "en"){
+    i18n = new (require('i18n-2'))({
+      locales: ['et'],
+    });
+  } else {
+    i18n = new (require('i18n-2'))({
+      locales: ['en'],
+      updateFiles: false
+    });
+  }
+  console.log("Set language to " + i18n.getLocale())
+  res.redirect("back");
 })
+
+  // router.get('/about', function (req, res, next) {
+  //   // var aboutData = data;
+  //   // aboutData['title'] = "About Us";
+  //   res.render('about', JSON.stringify(data));
+
+
+  router.get('/about', function (req, res, next) {
+    // var aboutData = data;
+    // aboutData['title'] = "About Us";
+    res.render('about', {
+      title: i18n.__('About us'),
+      whoarewe: i18n.__('Who are we'),
+      whotext: i18n.__('We are students from University of Tartu - Andre, Erik and Jan. '),
+      whatwedo: i18n.__('What do we do'),
+      whattext: i18n.__('We created this website to ' +
+        'spread knowledge about alcohol consumption (and also to finish our web app development course).'),
+      menu: i18n.__('Menu'),
+      mainpage: i18n.__('Main Page'),
+      changelang: i18n.__('Change to Estonian'),
+      aboutus: i18n.__('About us'),
+      settings: i18n.__('Settings'),
+      logout: i18n.__('Log Out')
+    })
+  })
+
+
+
 
 router.get('/settings', function (req, res, next) {
   res.redirect('/')

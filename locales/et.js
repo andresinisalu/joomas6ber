@@ -1,0 +1,20 @@
+{
+	"About us": "Meist",
+	"Who are we": "Kes me oleme",
+	"We are students from University of Tartu - Andre, Erik and Jan. ": "Me oleme tudengid Tartu Ülikoolist: Andre, Erik ja Jan",
+	"What do we do": "Mida me teeme",
+	"We created this website to spread knowledge about alcohol consumption (and also to finish our web app development course).": "Me lõime selle veebirakenduse, et suurendada inimeste teadlikust alkoholist ja selle mõjust inimeste tervisele (ja et saada veebirakenduste aine vastatud)",
+	"Menu": "Menüü",
+	"Main Page": "Pealeht",
+	"Change to Estonian": "Muuda inglisekeelseks",
+	"Who are we?": "Who are we?",
+	"Main Page": "Avaleht",
+	"Settings": "Seaded",
+	"Log Out": "Logi Välja",
+	"Name": "Nimi",
+	"Volume": "Maht",
+	"Alcohol content": "Alkoholisisaldus",
+	"Price": "Hind",
+	"Start time": "Algusaeg",
+	"End time": "Lõppaeg"
+}

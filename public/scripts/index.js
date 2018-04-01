@@ -20,6 +20,7 @@ $(document).ready(function () {
     data.forEach(x => console.log(x.name + ' (' + x.volume + ' ml) ' + x.price + '€'))
   })
 
+
   $.get('/drinks/listAllConsumed', function (data) {
     $(function () {
       console.log(data)
@@ -28,7 +29,12 @@ $(document).ready(function () {
       });
     });
   })
-})
+
+// =======
+//   $('#startDateInput').val(new Date().toDateInputValue())
+//   $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
+// >>>>>>> translateWithPugs
+// })
 
 function selectDrink (selected_drink) {
   let drink = drinks.filter(x => selected_drink.value.split(' ')[0] === x.name)[0]
@@ -36,5 +42,34 @@ function selectDrink (selected_drink) {
     $('#volumeInput').val(drink.volume)
     $('#priceInput').val(drink.price)
     $('#drinkId').val(drink.id)
+    $('#alcoholPercentageInput').val(drink.alcohol_percentage)
+    $('#startDateInput').val(new Date().toDateInputValue())
+    $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
+    $('#nameInput').val(drink.name)
+
+    if (drink.filename) {
+      $('#drinkImage').attr({
+        'src': '/images/uploads/' + drink.filename,
+        'width': '100px',
+        'height': '100px'
+      })
+    }
+    else {
+      $('#drinkImage').attr({
+        'height': '0px',
+        'width': '0px'
+      })
+    }
   }
+}
+
+Date.prototype.toDateInputValue = function () {
+  let local = new Date(this)
+  local.setMinutes(this.getMinutes() - this.getTimezoneOffset())
+  return local.toJSON().slice(0, 16)
+}
+
+Date.prototype.addMinutes = function (min) {
+  this.setTime(this.getTime() + (min * 60 * 1000))
+  return this
 }
