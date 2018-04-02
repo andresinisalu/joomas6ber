@@ -16,8 +16,9 @@ block content
           form(method='post', action='/drinks/add', id='addDrinkForm', enctype="multipart/form-data")
             img(id='drinkImage' width='0px' height='0px')
             div(class="form-group")
-              label(for="nameInput") #{name}
-              input(type="text" class="form-control" id="nameInput" placeholder="Guinness" name='name')
+              label(for='drinkSelector') Drink selection
+              input#drinkSelector.form-control(type='text', list='drinkSelection', placeholder='Vali jook!', name='drink', onchange='selectDrink(this)')
+              datalist#drinkSelection
             div(class="form-group")
               label(for="volumeInput") #{volume}
               input(type="text" class="form-control" id="volumeInput" placeholder="(ml)" name='volume')
