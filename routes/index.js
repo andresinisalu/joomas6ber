@@ -7,6 +7,7 @@ const logger = require('../utils/logger')
 const uploader = require('../utils/uploader')
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
+const nodemailer = require('nodemailer')
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
@@ -176,6 +177,33 @@ router.get('/drinks/totalConsumed', requiresLogin, function (req, res, next) {
     }
     else res.send({ total: result.rows[0].total })
   })
+})
+
+router.post('/about',  function (req, res) {
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+
+  var mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: req.body.email,
+    subject: 'Teile kirjutati Joomas6ber appist',
+    text: 'Tulge ja vaadake meid: https://guarded-castle-88406.herokuapp.com/'
+  };
+
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+  res.redirect('/about')
 })
 
 module.exports = router
