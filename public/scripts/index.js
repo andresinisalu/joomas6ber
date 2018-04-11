@@ -1,4 +1,3 @@
-
 let drinks = null
 
 $(document).ready(function () {

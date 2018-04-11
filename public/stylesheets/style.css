@@ -4,7 +4,7 @@
 }
 
 #accordion {
-  margin-top: 2em;
+  margin: auto;
 }
 
 #loginContainer{
@@ -22,16 +22,19 @@
 }
 
 #accordion {
-  width: 40%;
+  width: 100%;
   max-width: 20em;
 }
 
 #about-text{
-  padding-top: 100px;
+  padding-top: 5em;
 }
 
 #drinkNav {
-  background-color: #25A2B7;
+  background-color: #323868;
+  border-radius: 0;
+  border: 0;
+  margin-bottom: 1em;
 }
 
 #drinkNav * {
@@ -40,6 +43,7 @@
 #drinkNav span{
   background-color: white;
 }
+
 
 .hamburger {
   font-size: 1.5em;
@@ -56,7 +60,7 @@
   height: 4.3em;
   width: 4.3em;
   border-radius: 50%;
-  border: 2px solid #25A2B7;
+  border: 2px solid #323868;
 }
 
 .icon-stack {
@@ -79,27 +83,28 @@
   line-height: inherit;
   height: 5.4em;
   left: 2.1em;
-  color: #25A2B7;
+  color: #323868;
   font-size: 1em
 }
 .icon-stack-2x {
   font-size: 1.5em;
 }
 .icon-stack-3x {
-  color: #25A2B7;
+  color: #323868;
   font-size: 3em;
 }
 
 .btn {
-  background-color: #25A2B7;
+  background-color: #323868;
   border-radius: 0;
+  margin: 5px auto;
 }
 
 .jumbotron {
-  margin: auto;
+  margin: 0;
   background-image: url("https://images.unsplash.com/photo-1438557068880-c5f474830377?ixlib=rb-0.3.5&s=ffb969051eb7d6e927743824fa62d396&auto=format&fit=crop&w=2106&q=80");
   background-size: cover;
-  padding: 0 25%;
+  padding: 3% 25%;
   border-radius: 0;
   color: white;
 
