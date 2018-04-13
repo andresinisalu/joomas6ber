@@ -9,7 +9,7 @@ const uploader = require('../utils/uploader')
 const nodemailer = require('nodemailer');
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
-const i18n = new (require('i18n-2'))({ //TODO: var?
+var i18n = new (require('i18n-2'))({ //TODO: var?
   locales: ['et', 'en'],
   updateFiles: false
 });
