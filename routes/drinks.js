@@ -77,6 +77,17 @@ router.get('/drinks/listAllConsumed', requiresLogin, function (req, res, next) {
   })
 })
 
+router.get('/drinks/listLastFiveDrinks', requiresLogin, function (req, res, next) {
+  db.getLast5DrinksByUser(req.user.id, function (error, result) {
+    console.log(req.user.id)
+    if (error) {
+      logger.log('error', 'Couldn\'t fetch all consumed drinks: ', error)
+      res.send({})
+    }
+    else res.send(result.rows)
+  })
+})
+
 router.get('/drinks/totalConsumed', requiresLogin, function (req, res, next) {
   db.getNumberOfDrinksByUser(req.user.id, function (error, result) {
     if (error) {

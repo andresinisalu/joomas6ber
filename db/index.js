@@ -87,6 +87,13 @@ function getDrinksByUser (userId, cb) {
     'WHERE users.id = $1', [userId], cb)
 }
 
+function getLast5DrinksByUser (userId, cb) {
+  pool.query('SELECT drinks.name, drinks.volume, drinks.price,drinks.alcohol_percentage, consumed_drinks.startdate, consumed_drinks.enddate FROM drinks ' +
+    'JOIN consumed_drinks on consumed_drinks.drinkid = drinks.id ' +
+    'JOIN users ON consumed_drinks.userid = users.id ' +
+    'WHERE users.id = $1', [userId], cb)
+}
+
 function getNumberOfDrinksByUser (userId, cb) {
   pool.query('SELECT COUNT(*) AS total FROM drinks ' +
     'JOIN consumed_drinks ON consumed_drinks.drinkid = drinks.id ' +
@@ -118,5 +125,6 @@ module.exports = {
   addDrinkToUser,
   getDrinksByUser,
   getNumberOfDrinksByUser,
-  addDrink
+  addDrink,
+  getLast5DrinksByUser
 }
