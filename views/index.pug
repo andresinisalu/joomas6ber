@@ -16,22 +16,22 @@ block content
                     form(method='post', action='/drinks/add', id='addDrinkForm', enctype="multipart/form-data")
                         img(id='drinkImage' width='0px' height='0px')
                         div(class="form-group")
-                            label(for="nameInput") #{name}
+                            label(for="nameInput") #{__("name")}
                             input(type="text" class="form-control" id="nameInput" placeholder="Guinness" name='name')
                         div(class="form-group")
-                            label(for="volumeInput") #{volume}
+                            label(for="volumeInput") #{__("volume")}
                             input(type="text" class="form-control" id="volumeInput" placeholder="(ml)" name='volume')
                         div(class="form-group")
-                            label(for="alcoholPercentageInput") #{alcoholcontent}
+                            label(for="alcoholPercentageInput") #{__("alcoholcontent")}
                             input(type="text" class="form-control" id="alcoholPercentageInput" placeholder="(%)" name='alcoholPercentage')
                         div(class="form-group")
-                            label(for="priceInput") #{price}
+                            label(for="priceInput") #{__("price")}
                             input(type="text" class="form-control" id="priceInput" placeholder="(€)" name='price')
                         div(class="form-group")
-                            label(for="startDateInput") #{starttime}
+                            label(for="startDateInput") #{__("starttime")}
                             input(type="datetime-local" class="form-control" id="startDateInput" name='startDate')
                         div(class="form-group")
-                            label(for="endDateInput") #{endtime}
+                            label(for="endDateInput") #{__("endtime")}
                             input(type="datetime-local" class="form-control" id="endDateInput" name='endDate')
                         input(type="file" name="drink-img")
                         input(id='drinkId' type='hidden' name='drinkId' value='null')

@@ -20,16 +20,16 @@ html(lang='et')
             span(class="icon-bar")
             span(class="icon-bar")
             span(class="icon-bar")
-          a(class="navbar-brand" href="/")= mainpage
+          a(class="navbar-brand" href="/") #{__("mainpage")}
         div(class="collapse navbar-collapse" id="navbar")
           ul(class="nav navbar-nav")
               li(class="nav-item")
-                  a(href="/changeLang" class="nav-link")= changelang
+                  a(href="/lang" class="nav-link") #{__("changelang")}
               li(class="nav-item")
-                  a(href="#" class="nav-link")= settings
+                  a(href="#" class="nav-link") #{__("settings")}
               li(class="nav-item")
-                  a(href="about" class="nav-link")= aboutus
+                  a(href="about" class="nav-link") #{__("about")}
               li(class="nav-item")
-                  a(href="logout" class="nav-link")= logout
+                  a(href="logout" class="nav-link") #{__("logout")}
     div(class="wrapper")
       block content

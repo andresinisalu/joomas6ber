@@ -6,13 +6,11 @@ const db = require('../db')
 const passport = require('passport')
 const logger = require('../utils/logger')
 const uploader = require('../utils/uploader')
-const nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer')
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
-var i18n = new (require('i18n-2'))({ //TODO: var?
-  locales: ['et', 'en'],
-  updateFiles: false
-});
+var i18n = require('i18n');
+
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
@@ -46,21 +44,8 @@ router.get('/login/facebook/callback', passport.authenticate('facebook', { failu
 
 /* GET home page. */
 router.get('/', requiresLogin, function (req, res, next) {
-  // res.sendFile(path.resolve('public/views/index.html'))
   res.render('index', {
-    title: "Joogisõber",
-    menu: i18n.__('Menu'),
-    mainpage: i18n.__('Main Page'),
-    changelang: i18n.__('Change to Estonian'),
-    aboutus: i18n.__('About us'),
-    settings: i18n.__('Settings'),
-    logout: i18n.__('Log Out'),
-    name: i18n.__('Name'),
-    volume: i18n.__("Volume"),
-    alcoholcontent:i18n.__("Alcohol content"),
-    price:i18n.__("Price"),
-    starttime:i18n.__("Start time"),
-    endtime:i18n.__("End time")
+    i18n: res
   })
 })
 
@@ -100,48 +85,27 @@ router.get('/stats/getAll', requiresAdmin, function (req, res, next) {
   }
 )
 
-router.get('/changeLang', function (req, res, next) {
-  if (i18n.getLocale() === "en"){
-    i18n = new (require('i18n-2'))({
-      locales: ['et'],
-    });
+router.get('/lang', function (req, res, next) {
+  // req.i18n.setLocale('et');
+  var locale;
+  if (i18n.getLocale() === 'en') {
+    locale = 'et';
   } else {
-    i18n = new (require('i18n-2'))({
-      locales: ['en'],
-      updateFiles: false
-    });
+    locale = 'en';
   }
-  console.log("Set language to " + i18n.getLocale())
+  res.cookie('locale', locale);
+  res.setLocale(locale);
+  i18n.setLocale(locale);
+  console.log("Set language to " + i18n.getLocale());
   res.redirect("back");
 })
 
-  // router.get('/about', function (req, res, next) {
-  //   // var aboutData = data;
-  //   // aboutData['title'] = "About Us";
-  //   res.render('about', JSON.stringify(data));
-
-
-  router.get('/about', function (req, res, next) {
-    // var aboutData = data;
-    // aboutData['title'] = "About Us";
-    res.render('about', {
-      title: i18n.__('About us'),
-      whoarewe: i18n.__('Who are we'),
-      whotext: i18n.__('We are students from University of Tartu - Andre, Erik and Jan. '),
-      whatwedo: i18n.__('What do we do'),
-      whattext: i18n.__('We created this website to ' +
-        'spread knowledge about alcohol consumption (and also to finish our web app development course).'),
-      menu: i18n.__('Menu'),
-      mainpage: i18n.__('Main Page'),
-      changelang: i18n.__('Change to Estonian'),
-      aboutus: i18n.__('About us'),
-      settings: i18n.__('Settings'),
-      logout: i18n.__('Log Out')
-    })
+router.get('/about', function (req, res, next) {
+  res.setLocale(i18n.getLocale());
+  res.render('about', {
+    i18n: res
   })
-
-
-
+})
 
 router.get('/settings', function (req, res, next) {
   res.redirect('/')
@@ -229,7 +193,7 @@ router.get('/drinks/totalConsumed', requiresLogin, function (req, res, next) {
   })
 })
 
-router.post('/about',  function (req, res) {
+router.post('/about', function (req, res) {
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -237,22 +201,22 @@ router.post('/about',  function (req, res) {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD
     }
-  });
+  })
 
   var mailOptions = {
     from: process.env.EMAIL_USERNAME,
     to: req.body.email,
     subject: 'Teie abi vajatakse',
     text: 'Minge korjake oma laps üless'
-  };
+  }
 
-  transporter.sendMail(mailOptions, function(error, info){
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error);
+      console.log(error)
     } else {
-      console.log('Email sent: ' + info.response);
+      console.log('Email sent: ' + info.response)
     }
-  });
+  })
 })
 
 module.exports = router
