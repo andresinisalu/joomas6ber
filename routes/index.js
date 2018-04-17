@@ -1,32 +1,27 @@
 const express = require('express')
-const app = require('../app')
 const router = express.Router()
 const path = require('path')
 const db = require('../db')
-const passport = require('passport')
 const logger = require('../utils/logger')
+//HEAD
 const uploader = require('../utils/uploader')
 const nodemailer = require('nodemailer')
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
-var i18n = require('i18n');
-
+var i18n = require('i18n')
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
   if (req.user && req.isAuthenticated()) res.redirect('/')
   else {
-    res.setLocale(i18n.getLocale());
+    res.setLocale(i18n.getLocale())
     res.render('login', {
       i18n: res
     })
   }
 })
-
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), function (req, res, next) {
-  res.redirect(req.session.returnTo || '/')
-  delete req.session.returnTo
-})
+const requiresLogin = require('../config/middlewares/authorization').requiresLogin
+const nodemailer = require('nodemailer')
 
 router.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
@@ -47,7 +42,7 @@ router.get('/login/facebook/callback', passport.authenticate('facebook', { failu
 
 /* GET home page. */
 router.get('/', requiresLogin, function (req, res, next) {
-  res.setLocale(i18n.getLocale());
+  res.setLocale(i18n.getLocale())
   res.render('index', {
     i18n: res
   })
@@ -90,110 +85,61 @@ router.get('/stats/getAll', requiresAdmin, function (req, res, next) {
 )
 
 router.get('/lang', function (req, res, next) {
-  var locale;
+  var locale
   if (i18n.getLocale() === 'en') {
-    locale = 'et';
+    locale = 'et'
   } else {
-    locale = 'en';
+    locale = 'en'
   }
-  res.cookie('locale', locale);
-  res.setLocale(locale);
-  i18n.setLocale(locale);
-  console.log("Set language to " + i18n.getLocale());
-  res.redirect("back");
+  res.cookie('locale', locale)
+  res.setLocale(locale)
+  i18n.setLocale(locale)
+  console.log('Set language to ' + i18n.getLocale())
+  res.redirect('back')
 })
 
 router.get('/about', function (req, res, next) {
-  res.setLocale(i18n.getLocale());
+  res.setLocale(i18n.getLocale())
   res.render('about', {
     i18n: res
   })
 })
 
+//===
+// router.get('/about', function (req, res, next) {
+//   res.sendFile(path.resolve('public/views/about.html'))
+// })
+
+//master
 router.get('/settings', function (req, res, next) {
   res.redirect('/')
 })
 
-router.get('/drinks/getAllAvailable', requiresLogin, function (req, res, next) {
-  db.getAllAvailableDrinks(req.user.id, (error, result) => {
+router.post('/about', function (req, res) {
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
+    }
+  })
+
+  var mailOptions = {
+    from: process.env.EMAIL_USERNAME,
+    to: req.body.email,
+    subject: 'Teile kirjutati Joomas6ber appist',
+    text: 'Tulge ja vaadake meid: https://guarded-castle-88406.herokuapp.com/'
+  }
+
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      logger.error('Couldn\'t retrieve drinks from db: ', error.message, error.stack)
-      res.sendStatus(500)
-    }
-    else {
-      res.json(result.rows)
+      console.log(error)
+    } else {
+      console.log('Email sent: ' + info.response)
     }
   })
-})
-
-router.post('/drinks/add', requiresLogin, uploader.single('drink-img'), function (req, res, next) {
-  let name = req.body.name
-  let startDate = new Date(req.body.startDate).toISOString()
-  let endDate = new Date(req.body.endDate).toISOString()
-  let alcoholPercentage = parseFloat(req.body.alcoholPercentage)
-  let price = parseFloat(req.body.price)
-  let volume = req.body.volume
-  let isFinished = true
-  let filename = null
-  if (req.file) filename = req.file.filename
-
-  db.getAllAvailableDrinks(req.user.id, (error, result) => {
-    if (error) logger.error('Some problem with loading drinks from db.')
-    else {
-      let drinks = result.rows
-      let leitudId = null
-      for (let i in drinks) {
-        let drink = drinks[i]
-        /* Ignore .0 rounding errors with double equal signs for numeric variables. */
-        if (drink.name === name &&
-          drink.volume == volume &&
-          drink.alcohol_percentage == alcoholPercentage &&
-          drink.price == price &&
-          (drink.userid === null || drink.userid === req.user.id)) {
-          leitudId = drink.id
-          break
-        }
-      }
-      if (leitudId === null) {
-        db.addDrink(name, volume, alcoholPercentage, price, req.user.id, filename, (error, result) => {
-          if (error) logger.error('Could not add new drink to db.')
-          else {
-            leitudId = result.rows[0]['id']
-            db.addDrinkToUser(leitudId, req.user.id, startDate, endDate, isFinished, (error2, result2) => {
-              if (error2) logger.log('error', error2)
-              else logger.log('info', 'Added a drink to db and user.')
-            })
-          }
-        })
-      } else {
-        db.addDrinkToUser(leitudId, req.user.id, startDate, endDate, isFinished, (error2, result2) => {
-          if (error2) logger.log('error', error2)
-          else logger.log('info', 'Added a drink to user.')
-        })
-      }
-    }
-  })
-  res.redirect('/')
-})
-
-router.get('/drinks/listAllConsumed', requiresLogin, function (req, res, next) {
-  db.getDrinksByUser(req.user.id, function (error, result) {
-    if (error) {
-      logger.log('error', 'Couldn\'t fetch all consumed drinks: ', error)
-      res.send({})
-    }
-    else res.send(result.rows)
-  })
-})
-
-router.get('/drinks/totalConsumed', requiresLogin, function (req, res, next) {
-  db.getNumberOfDrinksByUser(req.user.id, function (error, result) {
-    if (error) {
-      logger.log('error', 'Couldn\'t fetch number of consumed drinks: ', error)
-      res.send({ total: null })
-    }
-    else res.send({ total: result.rows[0].total })
-  })
+  res.redirect('/about')
 })
 
 router.post('/about', function (req, res) {

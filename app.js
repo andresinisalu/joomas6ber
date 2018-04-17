@@ -9,14 +9,16 @@ const logger = require('./utils/logger')
 const passport = require('passport')
 const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
+//HEAD
+var flash = require('connect-flash')
+const del = require('del')
+const fs = require('fs')
+//master
 const app = express()
 const db = require('./db')
 require('./config/passport')(passport, db)
 var i18n = require('i18n');
 
-
-let index = require('./routes/index')
-let users = require('./routes/users')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -54,11 +56,17 @@ app.locals.__ = i18n.__;
 
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
 
-app.use('/', index)
-app.use('/users', users)
+/* Will dynamically load all routes from /routes and bind them to their own endpoints defined by the filename */
+fs.readdirSync(__dirname + '/routes').forEach(function (file) {
+  if (file.substr(file.lastIndexOf('.') + 1) !== 'js') return
+  let name = file.substr(0, file.indexOf('.'))
+  let route = require('./routes/' + name)
+  app.use('/', route)
+})
 
-// catch 404 and forward to error handle
+// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   let err = new Error('Not Found')
   err.status = 404
@@ -79,8 +87,7 @@ app.use(function (err, req, res, next) {
 db.init()
 
 /* Will clear uploads folder for testing */
-const del = require('del')
 const uploads_folder = path.join('public', 'images', 'uploads')
-del.sync([uploads_folder + '/**', '!' + uploads_folder], '!' + path.join('public', 'images', 'uploads', '.gitignore'));
+del.sync([uploads_folder + '/**', '!' + uploads_folder], '!' + path.join('public', 'images', 'uploads', '.gitignore'))
 
 module.exports = app

@@ -1,0 +1,24 @@
+doctype html
+html
+    head
+        title Payment sample
+        link(rel='stylesheet', href='./stylesheets/style.css')
+    body(style="text-align: center")
+        .contents(style='display: inline-block')
+            h1 Test payment
+            -if(messages)
+                div#note #{messages}
+            form(action='/banks/pay', method='post', name='payform')
+                table
+                    tr
+                        td Amount
+                        td
+                            input(name='amount', value='2.95')
+                    tr
+                        td Currency
+                        td
+                            input(name='curr', value='EUR')
+                .select-provider
+                    input(type='hidden', name='provider')
+                    input(type='button', onclick="document.payform['provider'].value='swedbank';document.payform.submit()", value='Swedbank')
+                    input(type='button', onclick="document.payform['provider'].value='seb';document.payform.submit()", value='Seb')
