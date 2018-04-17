@@ -15,6 +15,8 @@ const fs = require('fs')
 const app = express()
 const db = require('./db')
 require('./config/passport')(passport, db)
+var i18n = require('i18n');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
@@ -26,6 +28,7 @@ app.use(require('morgan')('combined', { 'stream': logger.stream }))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use(i18n.init)
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({
   store: new pgSession({
@@ -37,6 +40,17 @@ app.use(session({
   saveUninitialized: false,
   cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 } // 30 days
 }))
+
+i18n.configure({
+  locales:['et','en'],
+  directory: __dirname + '/locales',
+  defaultLocale: 'et',
+  extension: '.js',
+  cookieName: 'i18n'
+});
+
+
+app.locals.__ = i18n.__;
 
 app.use(passport.initialize())
 app.use(passport.session())

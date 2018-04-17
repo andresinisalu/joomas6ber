@@ -4,12 +4,11 @@ block content
     div(id="accordion")
         div(class="card", id="cardDrink")
             div(class="card-header", id="headingOne")
-                h5(class="mb-0 text-center")
-                  button(class="btn btn-link", data-toggle="collapse",
-                  data-target="#collapseOne", aria-expanded="true" aria-controls="collapseOne")
-                  span(class="icon-stack")
-                    i
-                    i(class="fas fa-beer icon-stack-3x")
+              button(class="btn btn-link", data-toggle="collapse",
+              data-target="#collapseOne", aria-expanded="true" aria-controls="collapseOne")
+              span(class="icon-stack")
+                i
+                i(class="fas fa-beer icon-stack-3x")
                     i(class="fas fa-plus icon-stack-1x")
             div(id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion")
                 div(class="card-body")
@@ -21,24 +20,23 @@ block content
                             datalist( id='drinkSelection')
                         img(id='drinkImage' width='0px' height='0px')
                         div(class="form-group")
-                            <label for="nameInput">Name</label>
-                            <input type="text" class="form-control" id="nameInput" placeholder="Name" name='name'>
-                            </div>
+                            label(for="nameInput") Name
+                            input(type="text" class="form-control" id="nameInput" placeholder="Name" name='name')
                         div(class="form-group")
-                            label (for="volumeInput">Volume</label)
-                            input (type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)" name='volume')
+                            label(for="volumeInput">Volume</label)
+                            input(type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)" name='volume')
                         div(class="form-group")
-                            label (for="alcoholPercentageInput">Alcohol content</label)
-                            input (type="text" class="form-control" id="alcoholPercentageInput" placeholder="Alcohol percentag (%)" name='alcoholPercentage')
+                            label(for="alcoholPercentageInput">Alcohol content</label)
+                            input(type="text" class="form-control" id="alcoholPercentageInput" placeholder="Alcohol percentag (%)" name='alcoholPercentage')
                         div(class="form-group")
-                            label (for="priceInput">Price</label)
-                            input (type="text" class="form-control" id="priceInput" placeholder="Price (€)" name='price')
+                            label(for="priceInput">Price</label)
+                            input(type="text" class="form-control" id="priceInput" placeholder="Price (€)" name='price')
                         div(class="form-group")
-                            label (for="startDateInput">Start time</label)
-                            input (type="datetime-local" class="form-control" id="startDateInput" name='startDate')
+                            label(for="startDateInput">Start time</label)
+                            input(type="datetime-local" class="form-control" id="startDateInput" name='startDate')
                         div(class="form-group")
-                            label (for="endDateInput")Start time
-                            input (type="datetime-local" class="form-control" id="endDateInput" name='endDate')
-                        input (type="file" name="drink-img")
-                        input (id='drinkId' type='hidden' name='drinkId' value='null')
-                        button (type="submit" class="btn btn-primary") Add Drink
+                            label(for="endDateInput")Start time
+                            input(type="datetime-local" class="form-control" id="endDateInput" name='endDate')
+                        input(type="file" name="drink-img")
+                        input(id='drinkId' type='hidden' name='drinkId' value='null')
+                        button(type="submit" class="btn btn-primary") Add Drink

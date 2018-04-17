@@ -19,6 +19,15 @@ $(document).ready(function () {
     data.forEach(x => console.log(x.name + ' (' + x.volume + ' ml) ' + x.price + '€'))
   })
 
+  $.get('/drinks/listAllConsumed', function (data) {
+    $(function () {
+      console.log(data)
+      $('#joodudJoogid').bootstrapTable({
+        data: data
+      })
+    })
+  })
+
   $('#startDateInput').val(new Date().toDateInputValue())
   $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
 })
