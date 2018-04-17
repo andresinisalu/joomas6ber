@@ -14,5 +14,6 @@
 	"alcoholcontent": "Alkoholisisaldus",
 	"price": "Hind",
 	"starttime": "Algusaeg",
-	"endtime": "Lõppaeg"
+	"endtime": "Lõppaeg",
+	"drinkselection": "Vali jook"
 }

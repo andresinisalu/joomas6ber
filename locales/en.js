@@ -14,5 +14,6 @@
 	"alcoholcontent": "Alcohol content",
 	"price": "Price",
 	"starttime": "Start time",
-	"endtime": "End time"
+	"endtime": "End time",
+	"drinkselection": "Select a drink"
 }
