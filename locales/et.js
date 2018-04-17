@@ -15,5 +15,8 @@
 	"price": "Hind",
 	"starttime": "Algusaeg",
 	"endtime": "Lõppaeg",
-	"drinkselection": "Vali jook"
+	"drinkselection": "Vali jook",
+	"username": "Kasutaja",
+	"password": "Parool",
+	"login": "Logi Sisse"
 }

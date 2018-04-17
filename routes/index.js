@@ -16,7 +16,10 @@ var i18n = require('i18n');
 router.get('/login', function (req, res, next) {
   if (req.user && req.isAuthenticated()) res.redirect('/')
   else {
-    res.sendFile(path.resolve('public/views/login.html'))
+    res.setLocale(i18n.getLocale());
+    res.render('login', {
+      i18n: res
+    })
   }
 })
 

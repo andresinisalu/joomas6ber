@@ -15,5 +15,8 @@
 	"price": "Price",
 	"starttime": "Start time",
 	"endtime": "End time",
-	"drinkselection": "Select a drink"
+	"drinkselection": "Select a drink",
+	"username": "Username",
+	"password": "Password",
+	"login": "Log In"
 }

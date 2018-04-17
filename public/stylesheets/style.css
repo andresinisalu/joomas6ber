@@ -21,7 +21,7 @@
   background: none;
 }
 
-#accordion {
+#accordion, #loginContainer {
   width: 100%;
   max-width: 20em;
 }
