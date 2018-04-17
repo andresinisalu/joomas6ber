@@ -44,6 +44,7 @@ router.get('/login/facebook/callback', passport.authenticate('facebook', { failu
 
 /* GET home page. */
 router.get('/', requiresLogin, function (req, res, next) {
+  res.setLocale(i18n.getLocale());
   res.render('index', {
     i18n: res
   })
@@ -86,7 +87,6 @@ router.get('/stats/getAll', requiresAdmin, function (req, res, next) {
 )
 
 router.get('/lang', function (req, res, next) {
-  // req.i18n.setLocale('et');
   var locale;
   if (i18n.getLocale() === 'en') {
     locale = 'et';
