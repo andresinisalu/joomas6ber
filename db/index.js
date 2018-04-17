@@ -109,6 +109,10 @@ function addDrink (name, volume, alcoholPercentage, price, userId, filename, cb)
     [name, volume, alcoholPercentage, price, userId, filename], cb)
 }
 
+function getSessionFromSID (sid, cb) {
+  pool.query('SELECT sess FROM session WHERE sid=$1', [sid], cb)
+}
+
 module.exports = {
   query: (text, params, callback) => pool.query(text, params, callback),
   init,
@@ -126,5 +130,6 @@ module.exports = {
   getDrinksByUser,
   getNumberOfDrinksByUser,
   addDrink,
+  getSessionFromSID,
   getLast5DrinksByUser
 }

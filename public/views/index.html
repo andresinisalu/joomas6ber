@@ -16,10 +16,15 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
-  <script> if (!window.jQuery) {document.write('<script src="../scripts/jquery-3.3.1.js" rel="stylesheet"><\/script>')}</script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"
+          integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <script> if (!window.jQuery) {
+    document.write('<script src="../scripts/jquery-3.3.1.js" rel="stylesheet"><\/script>')
+  }</script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script> if(typeof($.fn.modal) === 'undefined') {document.write('<script src="../scripts/bootstrap.min.js"><\/script>')}</script>
+  <script> if (typeof($.fn.modal) === 'undefined') {
+    document.write('<script src="../scripts/bootstrap.min.js"><\/script>')
+  }</script>
   <script src='../scripts/index.js'></script>
   <script src='../scripts/index_graphing.js'></script>
 </head>
@@ -73,7 +78,8 @@
               <form method='post' action='/drinks/add' id='addDrinkForm' enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="drinkSelector">Drink selection</label>
-                  <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook!"
+                  <input id="drinkSelector" class="form-control" type="text" list="drinkSelection"
+                         placeholder="Vali jook!"
                          name='drink' onchange='selectDrink(this)' />
                   <datalist id='drinkSelection'>
                   </datalist>
@@ -89,7 +95,8 @@
                 </div>
                 <div class="form-group">
                   <label for="alcoholPercentageInput">Alcohol content</label>
-                  <input type="text" class="form-control" id="alcoholPercentageInput" placeholder="Alcohol percentage (%)" name='alcoholPercentage'>
+                  <input type="text" class="form-control" id="alcoholPercentageInput"
+                         placeholder="Alcohol percentage (%)" name='alcoholPercentage'>
                 </div>
                 <div class="form-group">
                   <label for="priceInput">Price</label>
@@ -110,15 +117,17 @@
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </div>
     <div class='col-sm-2'>
-      Siin on viimased 5 jooki
+      Viimased joogid:
       <div id='table_div'></div>
     </div>
     <div class='w-100'></div>
     <div class='col'>
-      <canvas id="myChart" width="400" height="200"></canvas>
+      <div class='chart-container'>
+        <canvas id="myChart" width="400" height="200"></canvas>
+      </div>
     </div>
   </div>
 </div>

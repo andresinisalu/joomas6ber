@@ -1,20 +1,18 @@
-
-$( document ).ready(function() {
-  google.charts.load('current', {'packages':['table']});
+$(document).ready(function () {
+  google.charts.load('current', { 'packages': ['table'] })
   google.charts.setOnLoadCallback(retreiveLastDrinks)
   const ctx = document.getElementById('myChart').getContext('2d')
 
   const cd = new Date()
-  const ch = cd.getHours();
+  const ch = cd.getHours()
   function ct (h) {
     vahemuutuja = new Date()
-    vahemuutuja.setHours(vahemuutuja.getHours() + h);
+    vahemuutuja.setHours(vahemuutuja.getHours() + h)
     return vahemuutuja.getHours()
   }
 
-
-  let drinks = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-  const muudaHiljem = [ct(-12) , ct(-11), ct(-10), ct(-9), ct(-8), ct(-7), ct(-6), ct(-5), ct(-4), ct(-3), ct(-2), ct(-1), ct(0), ct(1) , ct(2)
+  let drinks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  const muudaHiljem = [ct(-12), ct(-11), ct(-10), ct(-9), ct(-8), ct(-7), ct(-6), ct(-5), ct(-4), ct(-3), ct(-2), ct(-1), ct(0), ct(1), ct(2)
     , ct(3), ct(4), ct(5), ct(6), ct(7), ct(8), ct(9), ct(10), ct(11), ct(12)]
 
   function retrieveStats () {
@@ -37,18 +35,18 @@ $( document ).ready(function() {
   }
 
   function parseData (data) {
-    data.forEach(function(element) {
+    drinks = drinks.fill(0)
+    data.forEach(function (element) {
+
       const aeg = new Date(element.startdate)
-      if(aeg.getDate() > cd.getDate() - 1 || aeg.getDate() < cd.getDate() + 1){
+      if (aeg.getDate() > cd.getDate() - 1 || aeg.getDate() < cd.getDate() + 1) {
         let asukoht = parseInt(aeg.getHours())
         let s = drinks[muudaHiljem.indexOf(asukoht)]
-        drinks.splice(muudaHiljem.indexOf(asukoht), 1, s+parseInt(element.alcohol_percentage))
+        drinks.splice(muudaHiljem.indexOf(asukoht), 1, s + parseInt(element.alcohol_percentage))
         myChart.update()
       }
-    });
+    })
   }
-
-
 
   // here is the last drinks table
   function retreiveLastDrinks () {
@@ -74,13 +72,14 @@ $( document ).ready(function() {
   //TODO korralik slicimine ja kuidagi sorteerida 5 kõige viimast jooki
   function parseLastDrinks (data) {
     const listOfDrinks = data
-    listOfDrinks.sort(function(a, b){return new Date(b).getDate()-new Date(a).getDate()})
-    if (listOfDrinks.length > 5){
+    listOfDrinks.sort(function (a, b) {
+      return new Date(b).getDate() - new Date(a).getDate()
+    })
+    if (listOfDrinks.length > 5) {
       listOfDrinks.slice(0, 4)
     }
 
     drawDrinksTable(listOfDrinks)
-
 
   }
   //TODO teha see asi resposviviks kuidagi
@@ -92,14 +91,12 @@ $( document ).ready(function() {
     table.addColumn('string', '%')
     table.addColumn('string', 'Price')
 
-
-
     stats.forEach(stat => table.addRow(
       [
         stat.name,
         stat.volume.toString(),
         stat.alcohol_percentage.toString(),
-        stat.price.toString(),
+        stat.price.toString()
 
       ]
     ))
@@ -108,33 +105,46 @@ $( document ).ready(function() {
 
   }
 
-
-
-retrieveStats();
-retreiveLastDrinks();
-const myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: muudaHiljem,
-    datasets: [{
-      label: '% of alchohol',
-      data: drinks,
-      backgroundColor: "#8e5ea2",
-      borderColor: "#8e5ea2",
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero:true
-        }
+  retrieveStats()
+  retreiveLastDrinks()
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: muudaHiljem,
+      datasets: [{
+        label: '% of alchohol',
+        data: drinks,
+        backgroundColor: '#8e5ea2',
+        borderColor: '#8e5ea2',
+        borderWidth: 1
       }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  })
+
+  function initWebsockets () {
+    const HOST = location.origin.replace(/^http/, 'ws')
+    const ws = new WebSocket(HOST)
+    ws.onmessage = function (event) {
+      let msg = JSON.parse(event.data)
+      switch (msg.command) {
+        case 'updateDrinks':
+          parseData(msg.data)
+          parseLastDrinks(msg.data)
+          break
+      }
     }
   }
-});
 
-
-});
-
+  initWebsockets()
+})

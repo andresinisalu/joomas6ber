@@ -14,6 +14,7 @@ $(document).ready(function () {
   $.get('/drinks/totalConsumed', function (data) {
     console.log('User has consumed ' + data.total + ' drink(s).')
   })
+
   $.get('/drinks/listAllConsumed', function (data) {
     console.log('Consumed drinks: ')
     data.forEach(x => console.log(x.name + ' (' + x.volume + ' ml) ' + x.price + '€'))

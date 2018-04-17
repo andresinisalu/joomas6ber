@@ -36,7 +36,7 @@ router.get('/settings', function (req, res, next) {
   res.redirect('/')
 })
 
-router.post('/about',  function (req, res) {
+router.post('/about', function (req, res) {
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -44,22 +44,22 @@ router.post('/about',  function (req, res) {
       user: process.env.EMAIL_USERNAME,
       pass: process.env.EMAIL_PASSWORD
     }
-  });
+  })
 
   var mailOptions = {
     from: process.env.EMAIL_USERNAME,
     to: req.body.email,
     subject: 'Teile kirjutati Joomas6ber appist',
     text: 'Tulge ja vaadake meid: https://guarded-castle-88406.herokuapp.com/'
-  };
+  }
 
-  transporter.sendMail(mailOptions, function(error, info){
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
-      console.log(error);
+      console.log(error)
     } else {
-      console.log('Email sent: ' + info.response);
+      console.log('Email sent: ' + info.response)
     }
-  });
+  })
   res.redirect('/about')
 })
 

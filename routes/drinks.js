@@ -4,6 +4,7 @@ const db = require('../db')
 const logger = require('../utils/logger')
 const uploader = require('../utils/uploader')
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
+const ws = require('../config/websockets')
 
 router.get('/drinks/getAllAvailable', requiresLogin, function (req, res, next) {
   db.getAllAvailableDrinks(req.user.id, (error, result) => {
@@ -52,14 +53,20 @@ router.post('/drinks/add', requiresLogin, uploader.single('drink-img'), function
             leitudId = result.rows[0]['id']
             db.addDrinkToUser(leitudId, req.user.id, startDate, endDate, isFinished, (error2, result2) => {
               if (error2) logger.log('error', error2)
-              else logger.log('info', 'Added a drink to db and user.')
+              else {
+                logger.log('info', 'Added a drink to db and user.')
+                ws.updateDrinksForUser(req.user.id)
+              }
             })
           }
         })
       } else {
         db.addDrinkToUser(leitudId, req.user.id, startDate, endDate, isFinished, (error2, result2) => {
           if (error2) logger.log('error', error2)
-          else logger.log('info', 'Added a drink to user.')
+          else {
+            logger.log('info', 'Added a drink to user.')
+            ws.updateDrinksForUser(req.user.id)
+          }
         })
       }
     }

@@ -6,6 +6,7 @@
 const app = require('../app')
 const debug = require('debug')('Joomas6ber:debug')
 const http = require('http')
+const ws = require('../config/websockets')
 
 /**
  * Get port from environment and store in Express.
@@ -101,3 +102,5 @@ const options = {
 }
 
 https.createServer(options, app).listen(443)
+
+ws.init(server)

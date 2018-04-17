@@ -12,7 +12,7 @@
   margin-top: 2em;
 }
 
-#loginContainer{
+#loginContainer {
   padding-top: 50px;
 }
 
@@ -47,10 +47,12 @@ a[aria-expanded="true"]::before {
   #sidebar {
     margin-left: -250px;
   }
+
   #sidebar.active {
     margin-left: 0;
   }
 }
+
 a, a:hover, a:focus {
   color: inherit;
   text-decoration: none;
@@ -84,6 +86,7 @@ a, a:hover, a:focus {
   display: block;
   background-color: #25A2B7;
 }
+
 #sidebar ul li a:hover {
   color: #7386D5;
   background: #fff;
@@ -94,7 +97,7 @@ a, a:hover, a:focus {
   background: #40ACCC;
 }
 
-#about-text{
+#about-text {
   padding-top: 100px;
 }
 
@@ -120,7 +123,7 @@ ul ul a {
 
 .btn.btn-link {
   background: #eee;
-  display:block;
+  display: block;
   height: 4.3em;
   width: 4.3em;
   border-radius: 50%;
@@ -135,6 +138,7 @@ ul ul a {
   line-height: 4em;
   vertical-align: middle;
 }
+
 .icon-stack-1x,
 .icon-stack-2x,
 .icon-stack-3x {
@@ -143,6 +147,7 @@ ul ul a {
   width: 100%;
   text-align: center;
 }
+
 .icon-stack-1x {
   line-height: inherit;
   height: 5.4em;
@@ -150,9 +155,11 @@ ul ul a {
   color: #25A2B7;
   font-size: 1em
 }
+
 .icon-stack-2x {
   font-size: 1.5em;
 }
+
 .icon-stack-3x {
   color: #25A2B7;
   font-size: 3em;
@@ -180,4 +187,9 @@ ul ul a {
   margin-left: 0;
   margin-bottom: 3em;
   float: left;
+}
+
+.chart-container {
+  width: 95% !important;
+  height: 50% !important;
 }
