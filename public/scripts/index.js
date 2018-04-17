@@ -19,21 +19,18 @@ $(document).ready(function () {
     data.forEach(x => console.log(x.name + ' (' + x.volume + ' ml) ' + x.price + '€'))
   })
 
-
   $.get('/drinks/listAllConsumed', function (data) {
     $(function () {
       console.log(data)
       $('#joodudJoogid').bootstrapTable({
         data: data
-      });
-    });
+      })
+    })
   })
 
-// =======
-//   $('#startDateInput').val(new Date().toDateInputValue())
-//   $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
-// >>>>>>> translateWithPugs
-// })
+  $('#startDateInput').val(new Date().toDateInputValue())
+  $('#endDateInput').val(new Date().addMinutes(30).toDateInputValue())
+})
 
 function selectDrink (selected_drink) {
   let drink = drinks.filter(x => selected_drink.value.split(' ')[0] === x.name)[0]
