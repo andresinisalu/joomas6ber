@@ -3,7 +3,7 @@ const requiresLogin = require('../config/middlewares/authorization').requiresLog
 const router = express.Router()
 
 /* GET users listing. */
-router.get('/', requiresLogin, function (req, res, next) {
+router.get('/users', requiresLogin, function (req, res, next) {
   res.send('respond with a resource')
 })
 

@@ -3,16 +3,25 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
-  <title>Joogisõber</title>
+  <meta name="description" content="Siin saab lisada endale uusi jooke. Vaadata mis sa eelnevalt oled joonud. Vaadata
+  umbes millal sa saad kaineks ja palju ilusaid graafikuid">
+  <meta name="keywords" content="Joomasõber alkohol sõber läti Jevgeni Ossinovski saku orginaal alegoq">
+  <title>Joogisõber | Siin saad lisada enda jooke</title>
   <link href="../stylesheets/bootstrap.css" rel="stylesheet">
   <link href="../stylesheets/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script type="text/javascript" src="../scripts/stats_graphing.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
   <script> if (!window.jQuery) {document.write('<script src="../scripts/jquery-3.3.1.js" rel="stylesheet"><\/script>')}</script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script> if(typeof($.fn.modal) === 'undefined') {document.write('<script src="../scripts/bootstrap.min.js"><\/script>')}</script>
   <script src='../scripts/index.js'></script>
+  <script src='../scripts/index_graphing.js'></script>
 </head>
 <body>
 <div id='pealkiri' class='jumbotron'>
@@ -28,10 +37,10 @@
     </div>
 
     <ul class="list-unstyled components">
-      <li class="active"><a href="/">Avaleht</a></li>
-      <li><a href="#">Seaded</a></li>
-      <li><a href="/about">Meist</a></li>
-      <li><a href="/logout">Logi Välja</a></li>
+      <li class="active"><a href="/" alt='home page'>Avaleht</a></li>
+      <li><a href="#" alt='settings page' rel='subsection'>Seaded</a></li>
+      <li><a href="/about" alt='about us page' rel='subsection'>Meist</a></li>
+      <li><a href="/logout" alt='logout link' rel='subsection'>Logi Välja</a></li>
     </ul>
   </nav>
 
@@ -41,66 +50,75 @@
       <i class="fas fa-bars hamburger"></i>
     </button>
   </div>
-  <div class='container'>
-
-    <div id="accordion">
-      <div class="card" id='cardDrink'>
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0 text-center">
-            <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                    aria-controls="collapseOne">
-              <!--Lisa Jook-->
-              <span class="icon-stack">
+  <div class='container-fluid row'>
+    <div class='col-sm-10'>
+      <div id="accordion">
+        <div class="card" id='cardDrink'>
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0 text-center">
+              <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                      aria-controls="collapseOne">
+                <!--Lisa Jook-->
+                <span class="icon-stack">
                     <i></i>
                 <i class="fas fa-beer icon-stack-3x"></i>
                 <i class="fas fa-plus icon-stack-1x"></i>
               </span>
-            </button>
-          </h5>
-        </div>
+              </button>
+            </h5>
+          </div>
 
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-            <form method='post' action='/drinks/add' id='addDrinkForm' enctype="multipart/form-data">
-              <div class="form-group">
-                <label for="drinkSelector">Drink selection</label>
-                <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook!"
-                       name='drink' onchange='selectDrink(this)' />
-                <datalist id='drinkSelection'>
-                </datalist>
-              </div>
-              <img id='drinkImage' width='0px' height='0px' />
-              <div class="form-group">
-                <label for="nameInput">Name</label>
-                <input type="text" class="form-control" id="nameInput" placeholder="Name" name='name'>
-              </div>
-              <div class="form-group">
-                <label for="volumeInput">Volume</label>
-                <input type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)" name='volume'>
-              </div>
-              <div class="form-group">
-                <label for="alcoholPercentageInput">Alcohol content</label>
-                <input type="text" class="form-control" id="alcoholPercentageInput" placeholder="Alcohol percentage (%)" name='alcoholPercentage'>
-              </div>
-              <div class="form-group">
-                <label for="priceInput">Price</label>
-                <input type="text" class="form-control" id="priceInput" placeholder="Price (€)" name='price'>
-              </div>
-              <div class="form-group">
-                <label for="startDateInput">Start time</label>
-                <input type="datetime-local" class="form-control" id="startDateInput" name='startDate'>
-              </div>
-              <div class="form-group">
-                <label for="endDateInput">Start time</label>
-                <input type="datetime-local" class="form-control" id="endDateInput" name='endDate'>
-              </div>
-              <input type="file" name="drink-img">
-              <input id='drinkId' type='hidden' name='drinkId' value='null'>
-              <button type="submit" class="btn btn-primary">Add Drink</button>
-            </form>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <form method='post' action='/drinks/add' id='addDrinkForm' enctype="multipart/form-data">
+                <div class="form-group">
+                  <label for="drinkSelector">Drink selection</label>
+                  <input id="drinkSelector" class="form-control" type="text" list="drinkSelection" placeholder="Vali jook!"
+                         name='drink' onchange='selectDrink(this)' />
+                  <datalist id='drinkSelection'>
+                  </datalist>
+                </div>
+                <img id='drinkImage' width='0px' height='0px' />
+                <div class="form-group">
+                  <label for="nameInput">Name</label>
+                  <input type="text" class="form-control" id="nameInput" placeholder="Name" name='name'>
+                </div>
+                <div class="form-group">
+                  <label for="volumeInput">Volume</label>
+                  <input type="text" class="form-control" id="volumeInput" placeholder="Volume (ml)" name='volume'>
+                </div>
+                <div class="form-group">
+                  <label for="alcoholPercentageInput">Alcohol content</label>
+                  <input type="text" class="form-control" id="alcoholPercentageInput" placeholder="Alcohol percentage (%)" name='alcoholPercentage'>
+                </div>
+                <div class="form-group">
+                  <label for="priceInput">Price</label>
+                  <input type="text" class="form-control" id="priceInput" placeholder="Price (€)" name='price'>
+                </div>
+                <div class="form-group">
+                  <label for="startDateInput">Start time</label>
+                  <input type="datetime-local" class="form-control" id="startDateInput" name='startDate'>
+                </div>
+                <div class="form-group">
+                  <label for="endDateInput">Start time</label>
+                  <input type="datetime-local" class="form-control" id="endDateInput" name='endDate'>
+                </div>
+                <input type="file" name="drink-img">
+                <input id='drinkId' type='hidden' name='drinkId' value='null'>
+                <button type="submit" class="btn btn-primary">Add Drink</button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+    </div>
+    </div>
+    <div class='col-sm-2'>
+      Siin on viimased 5 jooki
+      <div id='table_div'></div>
+    </div>
+    <div class='w-100'></div>
+    <div class='col'>
+      <canvas id="myChart" width="400" height="200"></canvas>
     </div>
   </div>
 </div>
