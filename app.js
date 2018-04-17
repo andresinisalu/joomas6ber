@@ -9,12 +9,10 @@ const logger = require('./utils/logger')
 const passport = require('passport')
 const session = require('express-session')
 const pgSession = require('connect-pg-simple')(session)
-//HEAD
 var index = require('routes/index');
 var flash = require('connect-flash')
 const del = require('del')
 const fs = require('fs')
-//master
 const app = express()
 const db = require('./db')
 require('./config/passport')(passport, db)
@@ -62,12 +60,12 @@ app.use(flash())
 app.use('/', index);
 
 /* Will dynamically load all routes from /routes and bind them to their own endpoints defined by the filename */
-// fs.readdirSync(__dirname + '/routes').forEach(function (file) {
-//   if (file.substr(file.lastIndexOf('.') + 1) !== 'js') return
-//   let name = file.substr(0, file.indexOf('.'))
-//   let route = require('./routes/' + name)
-//   app.use('/', route)
-// })
+fs.readdirSync(__dirname + '/routes').forEach(function (file) {
+  if (file.substr(file.lastIndexOf('.') + 1) !== 'js') return
+  let name = file.substr(0, file.indexOf('.'))
+  let route = require('./routes/' + name)
+  app.use('/', route)
+})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -3,12 +3,12 @@ const router = express.Router()
 const path = require('path')
 const db = require('../db')
 const logger = require('../utils/logger')
-//HEAD
 const uploader = require('../utils/uploader')
 const nodemailer = require('nodemailer')
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
 const requiresLogin = require('../config/middlewares/authorization').requiresLogin
 var i18n = require('i18n')
+const passport = require('passport')
 
 /* GET users listing. */
 router.get('/login', function (req, res, next) {
@@ -20,8 +20,6 @@ router.get('/login', function (req, res, next) {
     })
   }
 })
-const requiresLogin = require('../config/middlewares/authorization').requiresLogin
-const nodemailer = require('nodemailer')
 
 router.get('/logout', (req, res, next) => {
   req.session.destroy((err) => {
@@ -105,12 +103,6 @@ router.get('/about', function (req, res, next) {
   })
 })
 
-//===
-// router.get('/about', function (req, res, next) {
-//   res.sendFile(path.resolve('public/views/about.html'))
-// })
-
-//master
 router.get('/settings', function (req, res, next) {
   res.redirect('/')
 })
