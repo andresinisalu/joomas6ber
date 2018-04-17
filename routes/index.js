@@ -158,4 +158,4 @@ router.post('/about', function (req, res) {
   })
 })
 
-module.exports = router
+module.exports = router;

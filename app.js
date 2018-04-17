@@ -15,9 +15,10 @@ const fs = require('fs')
 const app = express()
 const db = require('./db')
 require('./config/passport')(passport, db)
-var i18n = require('i18n');
-
-
+var i18n = require('i18n')
+var listener = app.listen(3000, function(){
+  console.log('Listening on port ' + listener.address().port); //Listening on port 3000
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
@@ -42,15 +43,14 @@ app.use(session({
 }))
 
 i18n.configure({
-  locales:['et','en'],
+  locales: ['et', 'en'],
   directory: __dirname + '/locales',
   defaultLocale: 'et',
   extension: '.js',
   cookieName: 'i18n'
-});
+})
 
-
-app.locals.__ = i18n.__;
+app.locals.__ = i18n.__
 
 app.use(passport.initialize())
 app.use(passport.session())
