@@ -76,7 +76,7 @@ $( document ).ready(function() {
     const listOfDrinks = data
     listOfDrinks.sort(function(a, b){return new Date(b).getDate()-new Date(a).getDate()})
     if (listOfDrinks.length > 5){
-      listOfDrinks.splice(0, 5)
+      listOfDrinks.slice(0, 4)
     }
 
     drawDrinksTable(listOfDrinks)
