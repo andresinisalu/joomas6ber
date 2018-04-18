@@ -16,9 +16,7 @@ const app = express()
 const db = require('./db')
 require('./config/passport')(passport, db)
 var i18n = require('i18n')
-var listener = app.listen(3000, function(){
-  console.log('Listening on port ' + listener.address().port); //Listening on port 3000
-});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
@@ -56,13 +54,27 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 
+let index = require('./routes/index');
+let drinks = require('./routes/drinks');
+let banks = require('./routes/banks');
+let login = require('./routes/login');
+let stats = require('./routes/stats');
+let users = require('./routes/users');
+app.use('/', index);
+app.use('/', banks);
+app.use('/', login);
+app.use('/', stats);
+app.use('/', users);
+app.use('/', drinks);
+
+
 /* Will dynamically load all routes from /routes and bind them to their own endpoints defined by the filename */
-fs.readdirSync(__dirname + '/routes').forEach(function (file) {
-  if (file.substr(file.lastIndexOf('.') + 1) !== 'js') return
-  let name = file.substr(0, file.indexOf('.'))
-  let route = require('./routes/' + name)
-  app.use('/', route)
-})
+// fs.readdirSync(__dirname + '/routes').forEach(function (file) {
+//   if (file.substr(file.lastIndexOf('.') + 1) !== 'js') return
+//   let name = file.substr(0, file.indexOf('.'))
+//   let route = require('./routes/' + name)
+//   app.use('/', route)
+// })
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

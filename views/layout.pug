@@ -6,10 +6,14 @@ html(lang='et')
     meta(name="viewport" content="width=device-width")
     link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
     link(rel='stylesheet' href='/stylesheets/style.css')
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css")
     script(src="https://use.fontawesome.com/releases/v5.0.6/js/all.js")
-    script(src="https://code.jquery.com/jquery-3.3.1.js", integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=", crossorigin="anonymous")
+    script(src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous")
     script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js")
+    script(type="text/javascript" src="https://www.gstatic.com/charts/loader.js")
+    script(type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js")
     script(src="../scripts/index.js")
+    script(src="../scripts/index_graphing.js")
   body
     div(id="pealkiri", class="jumbotron")
       h1 Joogisõber
@@ -31,5 +35,5 @@ html(lang='et')
                   a(href="about" class="nav-link") #{__("about")}
               li(class="nav-item")
                   a(href="logout" class="nav-link") #{__("logout")}
-    div(class="wrapper")
+    div(class="container")
       block content
