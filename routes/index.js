@@ -8,7 +8,7 @@ const requiresLogin = require('../config/middlewares/authorization').requiresLog
 const nodemailer = require('nodemailer')
 const uploader = require('../utils/uploader')
 const requiresAdmin = require('../config/middlewares/authorization').requiresAdmin
-var i18n = require('i18n')
+const i18n = require('i18n')
 
 router.get('/', requiresLogin, function (req, res, next) {
   res.setLocale(i18n.getLocale())
@@ -45,16 +45,9 @@ router.get('/about', function (req, res, next) {
 })
 
 router.get('/lang', function (req, res, next) {
-  var locale
-  if (i18n.getLocale() === 'en') {
-    locale = 'et'
-  } else {
-    locale = 'en'
-  }
-  res.cookie('locale', locale)
+  var locale = (i18n.getLocale() === 'en') ? 'et' : 'en';
   res.setLocale(locale)
   i18n.setLocale(locale)
-  console.log('Set language to ' + i18n.getLocale())
   res.redirect('back')
 })
 
@@ -89,30 +82,4 @@ router.post('/about', function (req, res) {
   res.redirect('/about')
 })
 
-router.post('/about', function (req, res) {
-
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD
-    }
-  })
-
-  var mailOptions = {
-    from: process.env.EMAIL_USERNAME,
-    to: req.body.email,
-    subject: 'Teie abi vajatakse',
-    text: 'Minge korjake oma laps üless'
-  }
-
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error)
-    } else {
-      console.log('Email sent: ' + info.response)
-    }
-  })
-})
-
-module.exports = router;
+module.exports = router
