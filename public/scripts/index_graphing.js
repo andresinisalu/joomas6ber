@@ -1,3 +1,5 @@
+let globalDrinkData = null // Very ugly hack, needs to be refactored away
+
 $(document).ready(function () {
   google.charts.load('current', { 'packages': ['table'] })
   google.charts.setOnLoadCallback(retreiveLastDrinks)
@@ -11,9 +13,8 @@ $(document).ready(function () {
     return vahemuutuja.getHours()
   }
 
-  let drinks = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-  const muudaHiljem = [ct(-12), ct(-11), ct(-10), ct(-9), ct(-8), ct(-7), ct(-6), ct(-5), ct(-4), ct(-3), ct(-2), ct(-1), ct(0), ct(1), ct(2)
-    , ct(3), ct(4), ct(5), ct(6), ct(7), ct(8), ct(9), ct(10), ct(11), ct(12)]
+  let drinks = new Array(24).fill(0)
+  const muudaHiljem = Array.from(new Array(25), (val, index) => ct(index - 12))
 
   function retrieveStats () {
     let request = new XMLHttpRequest()
@@ -35,6 +36,7 @@ $(document).ready(function () {
   }
 
   function parseData (data) {
+    globalDrinkData = data
     drinks = drinks.fill(0)
     data.forEach(function (element) {
 
@@ -146,5 +148,48 @@ $(document).ready(function () {
     }
   }
 
+  function clearLocalStorage () {
+    let url = $('#addDrinkForm').attr('action')
+    let drinks = JSON.parse(localStorage.getItem('drinks'))
+    let notAdded = []
+    drinks.forEach((drink) => {
+      $.post(url, drink)
+        .done((data) => alert('Added a drink from localStorage to server.'))
+        .fail((xhr, status, error) => {
+          notAdded.push(drink)
+          alert('Still couldn\'t add a drink from localStorage to server.')
+        })
+    })
+    localStorage.setItem('drinks', JSON.stringify(notAdded))
+  }
+
   initWebsockets()
+  clearLocalStorage()
+
+  $('#addDrinkForm').submit(function (event) {
+    event.preventDefault()
+    let url = $(this).attr('action')
+    let drink = {
+      name: $('#nameInput').val(),
+      startdate: new Date($('#startDateInput').val()).toISOString(),
+      enddate: new Date($('#endDateInput').val()).toISOString(),
+      alcohol_percentage: $('#alcoholPercentageInput').val(),
+      price: parseFloat($('#priceInput').val()),
+      volume: parseFloat($('#volumeInput').val()),
+      filename: $('#fileInput').val()
+    }
+    $.post(url, drink)
+      .done((data) => {
+        alert('Successfully added a drink!')
+      })
+      .fail((xhr, status, error) => {
+        alert('Couldn\'t add a drink, will be using localStorage.')
+        let drinks = JSON.parse(localStorage.getItem('drinks'))
+        if (drinks === null) drinks = []
+        drinks.push(drink)
+        localStorage.setItem('drinks', JSON.stringify(drinks))
+        globalDrinkData.push(drink)
+        parseData(globalDrinkData)
+      })
+  })
 })

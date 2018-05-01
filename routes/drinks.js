@@ -20,9 +20,9 @@ router.get('/drinks/getAllAvailable', requiresLogin, function (req, res, next) {
 
 router.post('/drinks/add', requiresLogin, uploader.single('drink-img'), function (req, res, next) {
   let name = req.body.name
-  let startDate = new Date(req.body.startDate).toISOString()
-  let endDate = new Date(req.body.endDate).toISOString()
-  let alcoholPercentage = parseFloat(req.body.alcoholPercentage)
+  let startDate = new Date(req.body.startdate).toISOString()
+  let endDate = new Date(req.body.enddate).toISOString()
+  let alcoholPercentage = parseFloat(req.body.alcohol_percentage)
   let price = parseFloat(req.body.price)
   let volume = req.body.volume
   let isFinished = true
@@ -86,7 +86,6 @@ router.get('/drinks/listAllConsumed', requiresLogin, function (req, res, next) {
 
 router.get('/drinks/listLastFiveDrinks', requiresLogin, function (req, res, next) {
   db.getLast5DrinksByUser(req.user.id, function (error, result) {
-    console.log(req.user.id)
     if (error) {
       logger.log('error', 'Couldn\'t fetch all consumed drinks: ', error)
       res.send({})
