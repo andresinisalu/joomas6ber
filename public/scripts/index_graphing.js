@@ -1,9 +1,9 @@
 let globalDrinkData = null // Very ugly hack, needs to be refactored away
+google.charts.load('current', { 'packages': ['table'] })
 
 $(document).ready(function () {
-  google.charts.load('current', { 'packages': ['table'] })
-  google.charts.setOnLoadCallback(retreiveLastDrinks)
   const ctx = document.getElementById('myChart').getContext('2d')
+  google.charts.setOnLoadCallback(retreiveLastDrinks)
 
   const cd = new Date()
   const ch = cd.getHours()
@@ -152,14 +152,16 @@ $(document).ready(function () {
     let url = $('#addDrinkForm').attr('action')
     let drinks = JSON.parse(localStorage.getItem('drinks'))
     let notAdded = []
-    drinks.forEach((drink) => {
-      $.post(url, drink)
-        .done((data) => alert('Added a drink from localStorage to server.'))
-        .fail((xhr, status, error) => {
-          notAdded.push(drink)
-          alert('Still couldn\'t add a drink from localStorage to server.')
-        })
-    })
+    if (drinks !== null) {
+      drinks.forEach((drink) => {
+        $.post(url, drink)
+          .done((data) => alert('Added a drink from localStorage to server.'))
+          .fail((xhr, status, error) => {
+            notAdded.push(drink)
+            alert('Still couldn\'t add a drink from localStorage to server.')
+          })
+      })
+    }
     localStorage.setItem('drinks', JSON.stringify(notAdded))
   }
 
