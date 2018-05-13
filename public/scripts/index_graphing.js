@@ -152,14 +152,16 @@ $(document).ready(function () {
     let url = $('#addDrinkForm').attr('action')
     let drinks = JSON.parse(localStorage.getItem('drinks'))
     let notAdded = []
-    drinks.forEach((drink) => {
-      $.post(url, drink)
-        .done((data) => alert('Added a drink from localStorage to server.'))
-        .fail((xhr, status, error) => {
-          notAdded.push(drink)
-          alert('Still couldn\'t add a drink from localStorage to server.')
-        })
-    })
+    if (drinks !== null) {
+      drinks.forEach((drink) => {
+        $.post(url, drink)
+          .done((data) => alert('Added a drink from localStorage to server.'))
+          .fail((xhr, status, error) => {
+            notAdded.push(drink)
+            alert('Still couldn\'t add a drink from localStorage to server.')
+          })
+      })
+    }
     localStorage.setItem('drinks', JSON.stringify(notAdded))
   }
 

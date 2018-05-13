@@ -34,6 +34,9 @@ function addUser (user, cb) {
     'RETURNING id;',
     [user.username, user.password, user.firstName, user.middleName, user.lastName, user.service, user.gender, user.weight, user.type, user.facebook_id, user.ssn], cb)
 }
+function deleteUser (user, cb) {
+  pool.query('DELETE FROM USERS where id = $1', [user],cb)
+}
 function init () {
   return readFile(pathModule.resolve(__dirname, './init.sql'), 'utf8')
     .then(tableDef => pool.query(tableDef))
@@ -71,6 +74,14 @@ function getAllAvailableDrinks (userId, cb) {
 
 function getDrinkById (drinkId, cb) {
   pool.query('SELECT * FROM drinks WHERE id = $1', [drinkId], cb)
+}
+
+
+function addNewUser (firstName, lastName, userName, password, cb) {
+  pool.query('INSERT INTO users' +
+    '(firstname, lastname, username, password, type) VALUES ' +
+    '($1, $2, $3, $4, user);',
+    [firstName, lastName, userName, password], cb)
 }
 
 function addDrinkToUser (drinkId, userId, startDate, endDate, isFinished, cb) {
@@ -131,5 +142,7 @@ module.exports = {
   getNumberOfDrinksByUser,
   addDrink,
   getSessionFromSID,
-  getLast5DrinksByUser
+  getLast5DrinksByUser,
+  addNewUser,
+  deleteUser
 }
