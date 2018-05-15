@@ -36,33 +36,23 @@ casper.thenOpen(url2, function() {
 casper.thenOpen(url4, function () {
 
   console.log("page loaded");
-  this.test.assertExists('form', "signupform is found");
-  this.fill(function(){
+  this.test.assertExists('form', "adding drings for is found");
+  this.evaluate(function(){
       document.getElementById("nameInput").value="testjook";
-      document.getElementById("volumeInput").value=500;
-      document.getElementById("alcoholPercentageInput").value=10;
-      document.getElementById("priceInput").value=10;
-      casper.click("addNewDrink")
+      document.getElementById("volumeInput").value="500";
+      document.getElementById("alcoholPercentageInput").value="10";
+      document.getElementById("priceInput").value="10";
+      document.getElementById("addNewDrink").click();
   });
 
-  // this.evaluate(function(){
-  //   document.getElementById("nameInput").value="testjook";
-  //   document.getElementById("volumeInput").value=500;
-  //   document.getElementById("alcoholPercentageInput").value=10;
-  //   document.getElementById("priceInput").value=10;
-  //   document.getElementById("addNewDrink")[0].click();
-  // });
-
-  // this.test.assertExists('.google-visualization-table-td', "Drink is added and appears");
-
 
 })
-
-
 
 casper.thenOpen(url4, function () {
-  this.echo(this.getTitle());
+  this.test.assertExists('.google-visualization-table-td', "Drink is added and appears");
 })
+
+
 
 // casper.thenOpen(url3, function () {
 //

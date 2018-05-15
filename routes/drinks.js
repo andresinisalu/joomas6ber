@@ -19,6 +19,8 @@ router.get('/drinks/getAllAvailable', requiresLogin, function (req, res, next) {
 })
 
 router.post('/drinks/add', requiresLogin, uploader.single('drink-img'), function (req, res, next) {
+  logger.log("OLEN SIIN")
+  console.log("olen siin")
   let name = req.body.name
   let startDate = new Date(req.body.startdate).toISOString()
   let endDate = new Date(req.body.enddate).toISOString()
@@ -28,6 +30,12 @@ router.post('/drinks/add', requiresLogin, uploader.single('drink-img'), function
   let isFinished = true
   let filename = null
   if (req.file) filename = req.file.filename
+  console.log(name)
+  console.log(startDate)
+  console.log(endDate)
+  console.log(alcoholPercentage)
+  console.log(price)
+  console.log(volume)
 
   db.getAllAvailableDrinks(req.user.id, (error, result) => {
     if (error) logger.error('Some problem with loading drinks from db.')
