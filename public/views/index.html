@@ -13,8 +13,6 @@
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
   <script type="text/javascript" src="../scripts/stats_graphing.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"
           integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
@@ -63,7 +61,7 @@
           <div class="card-header" id="headingOne">
             <h5 class="mb-0 text-center">
               <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                      aria-controls="collapseOne">
+                      aria-controls="collapseOne" id='addDrinkModal'>
                 <!--Lisa Jook-->
                 <span class="icon-stack">
                     <i></i>
@@ -74,7 +72,7 @@
             </h5>
           </div>
 
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div id="collapseOne" class="" aria-labelledby="headingOne" data-parent="#accordion">
             <div class="card-body">
               <form method='post' action='/drinks/add' id='addDrinkForm' enctype="multipart/form-data">
                 <div class="form-group">
@@ -113,7 +111,7 @@
                 </div>
                 <input type="file" name="drink-img" id='fileInput'>
                 <input id='drinkId' type='hidden' name='drinkId' value='null'>
-                <button type="submit" class="btn btn-primary">Add Drink</button>
+                <button type="submit" class="btn btn-primary" id='addNewDrink'>Add Drink</button>
               </form>
             </div>
           </div>
