@@ -1,12 +1,4 @@
-// casper.option = ({
-//   verbose: true,
-//   logLevel: 'debug',
-//   pageSettings: {
-//   loadImages:  false,         // The WebPage instance used by Casper will
-//     loadPlugins: false,         // use these settings
-//     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.4 (KHTML, like Gecko) Chrome/22.0.1229.94 Safari/537.4'
-// }
-// });
+
 
 // print out all the messages in the headless browser context
 casper.on('remote.message', function(msg) {
@@ -21,6 +13,7 @@ casper.on("page.error", function(msg, trace) {
 const url = 'http://localhost:3000/register';
 const url2 = 'http://localhost:3000/login';
 const url3 = 'http://localhost:3000/deleteAccount'
+const url4 = 'http://localhost:3000/'
 
 casper.start(url,function(){
   this.echo(this.getTitle());
@@ -49,6 +42,11 @@ casper.thenOpen(url2, function() {
     document.getElementById("login").click();
   });
 });
+
+casper.thenOpen(url4, function () {
+
+  this.test.assertEqual(this.getTitle(),'Joogisõber | Siin saad lisada enda jooke', 'Can log in with the user')
+})
 
 casper.thenOpen(url3, function () {
 
