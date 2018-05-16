@@ -1,9 +1,9 @@
 let globalDrinkData = null // Very ugly hack, needs to be refactored away
+google.charts.load('current', { 'packages': ['table'] })
 
 $(document).ready(function () {
-  google.charts.load('current', { 'packages': ['table'] })
-  google.charts.setOnLoadCallback(retreiveLastDrinks)
   const ctx = document.getElementById('myChart').getContext('2d')
+  google.charts.setOnLoadCallback(retreiveLastDrinks)
 
   const cd = new Date()
   const ch = cd.getHours()
